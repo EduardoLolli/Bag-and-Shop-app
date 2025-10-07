@@ -1,12 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Bag_and_Shop_app.Application.DTOs.User;
+using Bag_and_Shop_app.Application.Services;
+using Microsoft.AspNetCore.Mvc;
+
+
 
 namespace Bag_and_Shop_app.Controllers
 {
-    public class UserController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UserController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService)
         {
-            return View();
+            _userService = userService;
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            List<UserResponseDTO> users = await _userService.GetUsers();
+            return Ok(users);
+        }
+
     }
 }

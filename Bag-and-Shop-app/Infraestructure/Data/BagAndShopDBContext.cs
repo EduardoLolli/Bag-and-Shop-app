@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bag_and_Shop_app.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 namespace Bag_and_Shop_app.Infraestructure.Data
 {
     public class BagAndShopDBContext : DbContext
@@ -6,6 +7,8 @@ namespace Bag_and_Shop_app.Infraestructure.Data
         public BagAndShopDBContext(DbContextOptions<BagAndShopDBContext> options): base(options)
         {
         }
+
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

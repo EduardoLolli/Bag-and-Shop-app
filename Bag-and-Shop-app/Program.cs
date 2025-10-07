@@ -1,5 +1,6 @@
-using Microsoft.EntityFrameworkCore;
+using Bag_and_Shop_app.Application.Services;
 using Bag_and_Shop_app.Infraestructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddEntityFrameworkSqlServer().AddDbContext<BagAndShopDBContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"))
     );
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
