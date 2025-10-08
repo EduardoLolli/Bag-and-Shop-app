@@ -1,24 +1,29 @@
 ﻿using Bag_and_Shop_app.Application.DTOs.User;
+using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Application.Services;
 using Bag_and_Shop_app.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-
 
 namespace Bag_and_Shop_app.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class AuthController : Controller
     {
+        private readonly IAuthService _authService;
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        public AuthController(IAuthService authService, IUserService userService)
         {
+            _authService = authService;
             _userService = userService;
         }
-        [HttpPost("register")]
+
+
+
+        [AllowAnonymous]
+        [HttpPost("v1/register")]
         public async Task<ActionResult<UserResponseDTO>> Register([FromBody] UserRequestDTO dto)
         {
             try
@@ -36,11 +41,17 @@ namespace Bag_and_Shop_app.Controllers
                     throw new Exception("Email já cadastrado");
                 }
                 UserResponseDTO newuser = await _userService.addUser(user);
+                string token = _authService.GenerateToken(user);
+
                 return Ok(new
                 {
                     error = false,
                     message = "Usuário cadastrado com sucesso",
-                    data = newuser
+                    data = new
+                    {
+                        user = newuser,
+                        token = token
+                    }
                 });
             }
             catch (Exception ex)
@@ -52,27 +63,7 @@ namespace Bag_and_Shop_app.Controllers
                 });
             }
         }
-        [HttpGet]
-        public async Task<ActionResult<List<UserResponseDTO>>> allUsers()
-        {
-            try
-            {
-                Task<List<UserResponseDTO>> users = _userService.getAllUsers();
-                return Ok(new
-                {
-                    error = false,
-                    message = "",
-                    data = users.Result
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new
-                {
-                    error = true,
-                    message = ex.Message
-                });
-            }
-        }
+
+
     }
 }
