@@ -19,9 +19,6 @@ namespace Bag_and_Shop_app.Controllers
             _authService = authService;
             _userService = userService;
         }
-
-
-
         [AllowAnonymous]
         [HttpPost("v1/register")]
         public async Task<ActionResult<UserResponseDTO>> Register([FromBody] UserRequestDTO dto)
@@ -32,17 +29,16 @@ namespace Bag_and_Shop_app.Controllers
                 {
                     Username = dto.Username,
                     Email = dto.Email,
-                    PasswordHash = dto.Password,
+                    PasswordHash = _authService.HashPass(dto.Password),
                     Role = "DEFAULT"
                 };
                 Boolean validEmail = await _userService.findUserByEmail(dto.Email) == null;
                 if (!validEmail)
                 {
-                    throw new Exception("Email já cadastrado");
+                    throw new Exception("Endereço de email já cadastrado");
                 }
                 UserResponseDTO newuser = await _userService.addUser(user);
                 string token = _authService.GenerateToken(user);
-
                 return Ok(new
                 {
                     error = false,
@@ -63,7 +59,5 @@ namespace Bag_and_Shop_app.Controllers
                 });
             }
         }
-
-
     }
 }
