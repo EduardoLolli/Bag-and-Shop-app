@@ -1,7 +1,6 @@
 ﻿using Bag_and_Shop_app.Application.DTOs.User;
 using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
-using System.Collections.Generic;
 
 namespace Bag_and_Shop_app.Application.Services
 {
