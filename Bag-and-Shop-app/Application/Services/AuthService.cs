@@ -10,36 +10,42 @@ namespace Bag_and_Shop_app.Application.Services
 {
     public class AuthService : IAuthService
     {
+        private readonly PasswordHasher<string> _hasher = new();
+
         public string HashPass(string password)
         {
             if (string.IsNullOrEmpty(password))
                 throw new ArgumentException("Password não pode ser nulo ou vazio.", nameof(password));
 
-            var hasher = new PasswordHasher<string>();
-            return hasher.HashPassword(null, password);
+            return _hasher.HashPassword(null, password);
         }
 
-        string IAuthService.GenerateToken(User user)
+        public Boolean VerifyPass(string hashedPassword, string providedPassword)
+        {
+            var result = _hasher.VerifyHashedPassword(null, hashedPassword, providedPassword);
+            return result == PasswordVerificationResult.Success;
+        }
+
+        public string GenerateToken(User user)
         {
             var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.key.secret);
             var tokenConfig = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                            {
-                                new Claim("UserId", user.Id.ToString()),
-                                new Claim("UserName", user.Username.ToString()),
-                                new Claim("UserRole", user.Role.ToString())
-                            }),
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim("UserId", user.Id.ToString()),
+                    new Claim("UserName", user.Username),
+                    new Claim("UserRole", user.Role)
+                }),
                 Expires = DateTime.UtcNow.AddHours(24),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
             };
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenConfig);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            return tokenString;
+            return tokenHandler.WriteToken(token);
         }
-
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using Bag_and_Shop_app.Application.DTOs.User;
+﻿using Bag_and_Shop_app.Application.DTOs.Login;
+using Bag_and_Shop_app.Application.DTOs.User;
 using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Application.Services;
 using Bag_and_Shop_app.Domain.Entities;
@@ -58,6 +59,45 @@ namespace Bag_and_Shop_app.Controllers
                     message = ex.Message
                 });
             }
+        }
+        [AllowAnonymous]
+        [HttpPost("v1/login")]
+        public async Task<ActionResult> Login([FromBody] LoginRequestDTO dto)
+        {
+            try
+            {
+                User user = await _userService.findUserByEmail(dto.Email);
+                if (user == null)
+                {
+                    throw new Exception("Usuário ou senha inválidos");
+                }
+
+                Boolean validPass = _authService.VerifyPass(user.PasswordHash, dto.Password);
+                if (!validPass)
+                {
+                    throw new Exception("Usuário ou senha inválidos");
+                }
+                string token = _authService.GenerateToken(user);
+                return Ok(new
+                {
+                    error = false,
+                    message = "Login realizado com sucesso",
+                    data = new
+                    {
+                        token = token
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    error = true,
+                    message = ex.Message
+                });
+            }
+
+
         }
     }
 }
