@@ -4,6 +4,7 @@ using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Application.Services;
 using Bag_and_Shop_app.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bag_and_Shop_app.Controllers
@@ -20,6 +21,7 @@ namespace Bag_and_Shop_app.Controllers
             _authService = authService;
             _userService = userService;
         }
+
         [AllowAnonymous]
         [HttpPost("v1/register")]
         public async Task<ActionResult<UserResponseDTO>> Register([FromBody] UserRequestDTO dto)
@@ -90,7 +92,7 @@ namespace Bag_and_Shop_app.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new
+                return Unauthorized(new
                 {
                     error = true,
                     message = ex.Message

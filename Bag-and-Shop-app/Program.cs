@@ -16,14 +16,29 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "MyPolicy",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        });
+});
+
+
 builder.Services.AddEntityFrameworkSqlServer().AddDbContext<BagAndShopDBContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"))
-    );
+options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"))
+);
 
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.key.secret);
 
@@ -44,19 +59,14 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-
-
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
+app.UseCors("MyPolicy");
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

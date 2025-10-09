@@ -12,7 +12,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
 
         public UserRepository(BagAndShopDBContext context)
         {
-                    _context = context;
+            _context = context;
         }
         public Task<UserResponseDTO> addNewUser(User user)
         {
@@ -20,8 +20,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             _context.SaveChanges();
             UserResponseDTO newUser = new UserResponseDTO
             {
-                Id = user.Id,
-                Username= user.Username,
+                Username = user.Username,
                 Email = user.Email,
             };
             return Task.FromResult(newUser);
