@@ -23,12 +23,12 @@ namespace Bag_and_Shop_app.Controllers
         {
             try
             {
-                Task<List<UserResponseDTO>> users = _userService.getAllUsers();
+                List<UserResponseDTO> users = await _userService.getAllUsers();
                 return Ok(new
                 {
                     error = false,
                     message = "",
-                    data = users.Result
+                    data = users
                 });
             }
             catch (Exception ex)

@@ -35,10 +35,10 @@ options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataB
 );
 
 builder.Services.AddScoped<IUserService, UserService>();
-
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ISystemService, SystemService>();
+builder.Services.AddScoped<ISystemRepository, SystemRepository>();
 
 var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.key.secret);
 

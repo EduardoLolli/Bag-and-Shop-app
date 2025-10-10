@@ -7,6 +7,6 @@ namespace Bag_and_Shop_app.Domain.Interfaces
     {
         Task<UserResponseDTO> addNewUser(User user);
         Task<User> findUserByEmail(string email);
-        List<UserResponseDTO> getAllUsers();
+        Task<List<UserResponseDTO>> getAllUsers();
     }
 }

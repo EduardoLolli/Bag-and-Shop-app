@@ -3,6 +3,7 @@ using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
 using Bag_and_Shop_app.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Bag_and_Shop_app.Infraestructure.Repositories
 {
@@ -30,16 +31,17 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             return _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public List<UserResponseDTO> getAllUsers()
+        public async Task<List<UserResponseDTO>> getAllUsers()
         {
-            return _context.Users
+            var users = await _context.Users
                 .Select(u => new UserResponseDTO
                 {
                     Id = u.Id,
                     Username = u.Username,
                     Email = u.Email,
                 })
-                .ToList();
+                .ToListAsync();
+            return users;
         }
     }
 }

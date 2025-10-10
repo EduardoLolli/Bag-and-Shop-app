@@ -22,10 +22,10 @@ namespace Bag_and_Shop_app.Application.Services
             return Task.FromResult(user);
         }
 
-        public Task<List<UserResponseDTO>> getAllUsers()
+        public async Task<List<UserResponseDTO>> getAllUsers()
         {
-            List<UserResponseDTO> users = _userRepository.getAllUsers();
-            return Task.FromResult(users);
+            List<UserResponseDTO> users = await _userRepository.getAllUsers();
+            return users;
         }
     }
 }
