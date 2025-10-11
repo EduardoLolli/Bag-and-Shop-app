@@ -46,10 +46,6 @@ namespace Bag_and_Shop_app.Controllers
             }
         }
 
-        public ISystemService Get_systemService()
-        {
-            return _systemService;
-        }
 
         [HttpGet("v1/listSystems")]
         public async Task<ActionResult> ListSystems()
@@ -57,6 +53,10 @@ namespace Bag_and_Shop_app.Controllers
             try
             {
                 List<SystemResponseDTO> systems = await _systemService.GetAllSystems();
+                if (systems.Count < 1)
+                {
+                    throw new Exception("No systems found");
+                }
                 return Ok(new
                 {
                     error = false,

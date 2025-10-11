@@ -5,6 +5,6 @@
         public int Id { get; set; }
         public string Name { get; set; } = "Loja Padrão";
         public int CampaignId { get; set; } // FK para Campaign
-        public ICollection<Item> Items { get; set; } = new List<Item>();
+        public ICollection<StoreItem> Items { get; set; } = new List<StoreItem>();
     }
 }

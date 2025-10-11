@@ -4,8 +4,6 @@
     {
         public int Id { get; set; }
         public int CharacterId { get; set; } // FK para Character
-        public ICollection<Item> Items { get; set; } = new List<Item>();
-        public decimal TotalWeight => Items.Sum(i => i.Weight);
-
+        public ICollection<BagItem> Items { get; set; } = new List<BagItem>();
     }
 }

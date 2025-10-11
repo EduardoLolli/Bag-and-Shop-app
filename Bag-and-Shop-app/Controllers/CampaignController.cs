@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Bag_and_Shop_app.Application.DTOs.Campaign;
+using Bag_and_Shop_app.Application.Interfaces;
+using Bag_and_Shop_app.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +12,36 @@ namespace Bag_and_Shop_app.Controllers
     [ApiController]
     public class CampaignController : ControllerBase
     {
-        public CampaignController()
+        private readonly ICampaignService _campaignService;
+        public CampaignController(ICampaignService campaignService)
         {
+            _campaignService = campaignService;
         }
 
+        [HttpPost("v1/RegisterCampaign")]
+        public async Task<ActionResult<CampaignResponseDTO>> CreateCampaign([FromBody] CampaignRequestDTO dto)
+        {
+            try
+            {
+                Campaign campaign = new Campaign
+                {
+                    Name = dto.Name,
+                    SystemId = dto.SystemId
+                };
+                CampaignResponseDTO newCampaign = await _campaignService.CreateCampaign(campaign);
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    error = true,
+                    message = ex.Message
+                });
+            }
+
+            return Ok();
+        }
     }
 }

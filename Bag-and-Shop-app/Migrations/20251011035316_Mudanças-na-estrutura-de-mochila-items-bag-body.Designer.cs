@@ -4,6 +4,7 @@ using Bag_and_Shop_app.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bag_and_Shop_app.Migrations
 {
     [DbContext(typeof(BagAndShopDBContext))]
-    partial class BagAndShopDBContextModelSnapshot : ModelSnapshot
+    [Migration("20251011035316_Mudanças-na-estrutura-de-mochila-items-bag-body")]
+    partial class Mudançasnaestruturademochilaitemsbagbody
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
