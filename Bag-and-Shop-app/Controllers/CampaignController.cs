@@ -2,7 +2,6 @@
 using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bag_and_Shop_app.Controllers
@@ -18,7 +17,7 @@ namespace Bag_and_Shop_app.Controllers
             _campaignService = campaignService;
         }
 
-        [HttpPost("v1/RegisterCampaign")]
+        [HttpPost("v1/CreateCampaign")]
         public async Task<ActionResult<CampaignResponseDTO>> CreateCampaign([FromBody] CampaignRequestDTO dto)
         {
             try
@@ -31,6 +30,13 @@ namespace Bag_and_Shop_app.Controllers
                 CampaignResponseDTO newCampaign = await _campaignService.CreateCampaign(campaign);
 
 
+
+                return Ok(new
+                {
+                    error = false,
+                    message = "Campanha criada com sucesso",
+                    data = newCampaign
+                });
             }
             catch (Exception ex)
             {
@@ -40,8 +46,6 @@ namespace Bag_and_Shop_app.Controllers
                     message = ex.Message
                 });
             }
-
-            return Ok();
         }
     }
 }

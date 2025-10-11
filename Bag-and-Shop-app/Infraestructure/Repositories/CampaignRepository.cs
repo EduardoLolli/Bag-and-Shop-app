@@ -16,7 +16,15 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
 
         public Task<CampaignResponseDTO> AddCampaign(Campaign campaign)
         {
-            throw new NotImplementedException();
+            _bagAndShopDBContext.Campaigns.Add(campaign);
+            _bagAndShopDBContext.SaveChanges();
+            CampaignResponseDTO campaignResponseDTO = new CampaignResponseDTO
+            {
+                Id = campaign.Id,
+                Name = campaign.Name,
+                SystemId = campaign.SystemId
+            };
+            return Task.FromResult(campaignResponseDTO);
         }
     }
 }
