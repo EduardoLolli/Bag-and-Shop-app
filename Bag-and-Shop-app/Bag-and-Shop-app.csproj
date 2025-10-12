@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infraestructure\Repositories\StoreItemRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0-rc.1.25451.107" />
@@ -26,6 +30,10 @@
 
   <ItemGroup>
     <Folder Include="Infraestructure\Configuration\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Infraestructure\Repositories\StoreItemRepository.cs" />
   </ItemGroup>
 
 </Project>
