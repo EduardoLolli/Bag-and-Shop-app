@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public int SystemId { get; set; } // FK para System
+        public int SystemId { get; set; }
         public string CampaignCode { get; set; } = string.Empty; // Código único para a campanha
         public SystemEntity System { get; set; } = null!;
         public ICollection<Character> Characters { get; set; } = new List<Character>();

@@ -1,8 +1,8 @@
 ﻿using Bag_and_Shop_app.Application.DTOs.Campaign;
-using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
 using Bag_and_Shop_app.Infraestructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bag_and_Shop_app.Infraestructure.Repositories
 {
@@ -22,9 +22,21 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             {
                 Id = campaign.Id,
                 Name = campaign.Name,
-                SystemId = campaign.SystemId
+                SystemId = campaign.SystemId,
+                CampaignCode = campaign.CampaignCode
             };
             return Task.FromResult(campaignResponseDTO);
+        }
+
+        public Task<Boolean> VerifyCode(string code)
+        {
+            var result = _bagAndShopDBContext.Campaigns.FirstOrDefaultAsync(c => c.CampaignCode == code);
+
+            if (result.Result == null)
+            {
+                return Task.FromResult(false);
+            }
+            return Task.FromResult(true);
         }
     }
 }

@@ -4,7 +4,7 @@ using Bag_and_Shop_app.Infraestructure.Data;
 
 namespace Bag_and_Shop_app.Infraestructure.Repositories
 {
-    public class StoreRepository   : IStoreRepository
+    public class StoreRepository : IStoreRepository
     {
         private readonly BagAndShopDBContext _context;
         public StoreRepository(BagAndShopDBContext bagAndShopDBContext)
@@ -12,20 +12,11 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             _context = bagAndShopDBContext;
         }
 
-        public async Task<Boolean> AddStore(Store store)
+        public Task<Store> AddStore(Store store)
         {
-            try
-            {
-                _context.Add(store);
-                _context.SaveChanges();
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-
+            _context.Stores.Add(store);
+            _context.SaveChanges();
+            return Task.FromResult(store);
         }
     }
 }

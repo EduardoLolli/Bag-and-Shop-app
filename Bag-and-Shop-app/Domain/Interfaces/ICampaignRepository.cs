@@ -6,5 +6,6 @@ namespace Bag_and_Shop_app.Domain.Interfaces
     public interface ICampaignRepository
     {
         Task<CampaignResponseDTO> AddCampaign(Campaign campaign);
+        Task<Boolean> VerifyCode(string code);
     }
 }

@@ -11,16 +11,10 @@
 
         public async Task<Boolean> AddStoreItem(StoreItem storeItem)
         {
-            try
-            {
-                _context.Add(storeItem);
-                _context.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            _context.Add(storeItem);
+            _context.SaveChanges();
+            return true;
+            
         }
     }
 }

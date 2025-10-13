@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bag_and_Shop_app.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/campaing")]
     [ApiController]
     public class CampaignController : ControllerBase
     {
@@ -25,12 +25,10 @@ namespace Bag_and_Shop_app.Controllers
                 Campaign campaign = new Campaign
                 {
                     Name = dto.Name,
-                    SystemId = dto.SystemId
+                    SystemId = dto.SystemId,
+                    CampaignCode = await _campaignService.GenerateCampaignCode()
                 };
                 CampaignResponseDTO newCampaign = await _campaignService.CreateCampaign(campaign);
-
-
-
                 return Ok(new
                 {
                     error = false,
