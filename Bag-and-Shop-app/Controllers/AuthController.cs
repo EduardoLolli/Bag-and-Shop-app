@@ -1,10 +1,10 @@
-﻿using Bag_and_Shop_app.Application.DTOs.Login;
+﻿using Bag_and_Shop_app.Application.DTOs.Auth;
+using Bag_and_Shop_app.Application.DTOs.Login;
 using Bag_and_Shop_app.Application.DTOs.User;
 using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Application.Services;
 using Bag_and_Shop_app.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bag_and_Shop_app.Controllers
@@ -100,6 +100,42 @@ namespace Bag_and_Shop_app.Controllers
             }
 
 
+        }
+        [AllowAnonymous]
+        [HttpPost("")]
+        public async Task<ActionResult> Auth([FromBody] AuthRequestDTO token)
+        {
+            try
+            {
+                var user = _authService.ValidateToken(token);
+                if (user == null)
+                {
+                    throw new Exception("Token inválido");
+                }
+                return Ok(new
+                {
+                    error = false,
+                    message = "Token válido",
+                    data = new
+                    {
+                        user = new UserResponseDTO
+                        {
+                            Id = user.Id,
+                            Username = user.Username,
+                            Email = user.Email,
+                            Role = user.Role
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(new
+                {
+                    error = true,
+                    message = ex.Message
+                });
+            }
         }
     }
 }

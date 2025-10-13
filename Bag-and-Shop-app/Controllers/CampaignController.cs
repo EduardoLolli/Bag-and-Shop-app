@@ -26,7 +26,8 @@ namespace Bag_and_Shop_app.Controllers
                 {
                     Name = dto.Name,
                     SystemId = dto.SystemId,
-                    CampaignCode = await _campaignService.GenerateCampaignCode()
+                    CampaignCode = await _campaignService.GenerateCampaignCode(),
+                    MasterId = dto.MasterId
                 };
                 CampaignResponseDTO newCampaign = await _campaignService.CreateCampaign(campaign);
                 return Ok(new

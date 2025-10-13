@@ -1,4 +1,5 @@
-﻿using Bag_and_Shop_app.Application.Interfaces;
+﻿using Bag_and_Shop_app.Application.DTOs.Auth;
+using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -35,6 +36,7 @@ namespace Bag_and_Shop_app.Application.Services
                 {
                     new Claim("UserId", user.Id.ToString()),
                     new Claim("UserName", user.Username),
+                    new Claim("Email", user.Email),
                     new Claim("UserRole", user.Role)
                 }),
                 Expires = DateTime.UtcNow.AddHours(24),
@@ -46,6 +48,36 @@ namespace Bag_and_Shop_app.Application.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenConfig);
             return tokenHandler.WriteToken(token);
+        }
+
+        public User ValidateToken(AuthRequestDTO token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.key.secret);
+            try
+            {
+                tokenHandler.ValidateToken(token.token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+                var jwtToken = (JwtSecurityToken)validatedToken;
+                return new User
+                {
+                    Id = int.Parse(jwtToken.Claims.First(x => x.Type == "UserId").Value),
+                    Username = jwtToken.Claims.First(x => x.Type == "UserName").Value,
+                    Email = jwtToken.Claims.First(x => x.Type == "Email").Value,
+                    Role = jwtToken.Claims.First(x => x.Type == "UserRole").Value
+                };
+
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
