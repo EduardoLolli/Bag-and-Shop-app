@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bag_and_Shop_app.Migrations
 {
     [DbContext(typeof(BagAndShopDBContext))]
-    [Migration("20251013200442_adicionadoCampoMasterIdNaTabelaCampaign")]
-    partial class adicionadoCampoMasterIdNaTabelaCampaign
+    [Migration("20251014025833_adicionadoMasterOn-Campaign")]
+    partial class adicionadoMasterOnCampaign
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

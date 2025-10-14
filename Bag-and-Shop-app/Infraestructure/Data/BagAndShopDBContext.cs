@@ -19,12 +19,6 @@ namespace Bag_and_Shop_app.Infraestructure.Data
         public DbSet<SystemEntity> SystemEntities { get; set; }
         public DbSet<User> Users { get; set; }
 
-
-
-
-
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
