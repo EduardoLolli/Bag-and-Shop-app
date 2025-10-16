@@ -43,7 +43,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
                 })
                 .FirstAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Campanha não encontrada");
             }
