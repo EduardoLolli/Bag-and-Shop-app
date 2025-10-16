@@ -52,5 +52,10 @@ namespace Bag_and_Shop_app.Application.Services
         {
             return _campaignRepository.GetCampaignByMasterId(masterId);
         }
+
+        public Task<List<CampaignResponseDTO>> GetCampaignByPlayerId(int playerId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
