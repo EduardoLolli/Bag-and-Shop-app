@@ -28,6 +28,27 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             return Task.FromResult(campaignResponseDTO);
         }
 
+        public async Task<CampaignResponseDTO> GetCampaignByCCode(string campaignCode)
+        {
+            try
+            {
+                return await _bagAndShopDBContext.Campaigns
+                .Where(c => c.CampaignCode == campaignCode)
+                .Select(c => new CampaignResponseDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    SystemId = c.SystemId,
+                    CampaignCode = c.CampaignCode
+                })
+                .FirstAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Campanha não encontrada");
+            }
+        }
+
         public Task<List<CampaignResponseDTO>> GetCampaignByMasterId(int masterId)
         {
             var campaigns = _bagAndShopDBContext.Campaigns

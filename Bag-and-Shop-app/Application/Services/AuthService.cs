@@ -18,18 +18,18 @@ namespace Bag_and_Shop_app.Application.Services
             if (string.IsNullOrEmpty(password))
                 throw new ArgumentException("Password não pode ser nulo ou vazio.", nameof(password));
 
-            return _hasher.HashPassword(null, password);
+            return _hasher.HashPassword(string.Empty, password);
         }
 
         public Boolean VerifyPass(string hashedPassword, string providedPassword)
         {
-            var result = _hasher.VerifyHashedPassword(null, hashedPassword, providedPassword);
+            var result = _hasher.VerifyHashedPassword(string.Empty, hashedPassword, providedPassword);
             return result == PasswordVerificationResult.Success;
         }
 
         public string GenerateToken(User user)
         {
-            var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.key.secret);
+            var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.Key.secret);
             var tokenConfig = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
@@ -53,7 +53,7 @@ namespace Bag_and_Shop_app.Application.Services
         public User ValidateToken(AuthRequestDTO token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.key.secret);
+            var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.Key.secret);
             try
             {
                 tokenHandler.ValidateToken(token.token, new TokenValidationParameters
@@ -76,7 +76,7 @@ namespace Bag_and_Shop_app.Application.Services
             }
             catch
             {
-                return null;
+                return null!;
             }
         }
     }

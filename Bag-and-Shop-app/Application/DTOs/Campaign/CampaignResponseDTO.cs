@@ -3,9 +3,9 @@
     public class CampaignResponseDTO
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int SystemId { get; set; }
-        public string CampaignCode { get; set; }
+        public string CampaignCode { get; set; } = string.Empty;
 
     }
 }

@@ -48,14 +48,17 @@ namespace Bag_and_Shop_app.Application.Services
             return code;
         }
 
+        public Task<CampaignResponseDTO> GetCampaignByCode(string campaignCode)
+        {
+
+            return _campaignRepository.GetCampaignByCCode(campaignCode);
+
+        }
+
         public Task<List<CampaignResponseDTO>> GetCampaignByMasterId(int masterId)
         {
             return _campaignRepository.GetCampaignByMasterId(masterId);
         }
 
-        public Task<List<CampaignResponseDTO>> GetCampaignByPlayerId(int playerId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

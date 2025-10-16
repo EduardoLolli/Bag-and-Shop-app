@@ -8,5 +8,6 @@ namespace Bag_and_Shop_app.Domain.Interfaces
         Task<CampaignResponseDTO> AddCampaign(Campaign campaign);
         Task<Boolean> VerifyCode(string code);
         Task<List<CampaignResponseDTO>> GetCampaignByMasterId(int masterId);
+        Task<CampaignResponseDTO> GetCampaignByCCode(string campaignCode);
     }
 }

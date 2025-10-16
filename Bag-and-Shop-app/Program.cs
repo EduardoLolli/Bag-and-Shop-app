@@ -43,7 +43,7 @@ builder.Services.AddScoped<ICampaignService, CampaignService>();
 builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
 builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 
-var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.key.secret);
+var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.Key.secret);
 
 builder.Services.AddAuthentication(x =>
 {

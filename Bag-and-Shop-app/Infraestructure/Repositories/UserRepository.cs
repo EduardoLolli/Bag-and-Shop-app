@@ -28,7 +28,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
         }
         public Task<User> findUserByEmail(string email)
         {
-            return _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return _context.Users.FirstAsync(u => u.Email == email);
         }
 
         public async Task<List<UserResponseDTO>> getAllUsers()

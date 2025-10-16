@@ -9,6 +9,7 @@ namespace Bag_and_Shop_app.Application.Interfaces
         Task<string> GenerateCampaignCode();
 
         Task<List<CampaignResponseDTO>> GetCampaignByMasterId(int masterId);
-        Task<List<CampaignResponseDTO>> GetCampaignByPlayerId(int playerId);
+
+        Task<CampaignResponseDTO> GetCampaignByCode(string campaignCode);
     }
 }

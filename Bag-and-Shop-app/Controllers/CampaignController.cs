@@ -1,6 +1,8 @@
-﻿using Bag_and_Shop_app.Application.DTOs.Campaign;
+﻿using System.Security.Permissions;
+using Bag_and_Shop_app.Application.DTOs.Campaign;
 using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Domain.Entities;
+using BagAndShopApp.Application.DTOs.Character;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -70,17 +72,20 @@ namespace Bag_and_Shop_app.Controllers
             }
         }
 
-        [HttpGet("v1/getCampaignByCharacterId/{characterId}")]
-        public async Task<ActionResult<List<CampaignResponseDTO>>> GetCampaignByPlayerId(int characterId)
+        [HttpPost("v1/findCampaignByCode")]
+        public async Task<ActionResult<CampaignResponseDTO>> FindCampaignByCode([FromBody] CampaignCodeRequestDTO dto)
         {
+
             try
             {
-                List<CampaignResponseDTO> campaigns = await _campaignService.GetCampaignByPlayerId(characterId);
+                CampaignResponseDTO campaign = await _campaignService.GetCampaignByCode(dto.CampaignCode);
+
+
                 return Ok(new
                 {
                     error = false,
-                    message = "Campanhas obtidas com sucesso",
-                    data = campaigns
+                    message = "Campanha obtida com sucesso",
+                    data = campaign
                 });
             }
             catch (Exception ex)
@@ -92,5 +97,7 @@ namespace Bag_and_Shop_app.Controllers
                 });
             }
         }
+
+
     }
 }

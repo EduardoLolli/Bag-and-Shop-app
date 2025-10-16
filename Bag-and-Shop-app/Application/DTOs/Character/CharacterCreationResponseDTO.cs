@@ -1,7 +1,9 @@
-﻿namespace Bag_and_Shop_app.Application.DTOs.System
+namespace Bag_and_Shop_app.Application.DTOs.Character
 {
-    public class SystemResponseDTO
+
+    public class CharacterCreationResponseDTO
     {
+
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

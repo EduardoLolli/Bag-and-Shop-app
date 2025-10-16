@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace Bag_and_Shop_app.Application.DTOs.System
+namespace Bag_and_Shop_app.Application.DTOs.Character
 {
-    public class SystemRequestDTO
+    public class CharacterCreationRequestDTO
     {
         [Required(ErrorMessage = "O nome do sistema é obrigatório.")]
         [StringLength(60, MinimumLength = 3)]
@@ -11,4 +11,5 @@ namespace Bag_and_Shop_app.Application.DTOs.System
         [Required(ErrorMessage = "A Descrição é obrigatório.")]
         public string Description { get; set; } = string.Empty;
     }
+
 }

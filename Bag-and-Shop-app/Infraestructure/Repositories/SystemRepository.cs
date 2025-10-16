@@ -50,7 +50,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
                     Name = s.Name,
                     Description = s.Description,
                 })
-                .FirstOrDefaultAsync();
+                .FirstAsync();
             return system;
 
         }
