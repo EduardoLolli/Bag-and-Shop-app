@@ -46,5 +46,28 @@ namespace Bag_and_Shop_app.Controllers
                 });
             }
         }
+
+        [HttpGet("v1/getCampaignByMasterId/{masterId}")]
+        public async Task<ActionResult<List<CampaignResponseDTO>>> GetCampaignByMasterId(int masterId)
+        {
+            try
+            {
+                List<CampaignResponseDTO> campaigns = await _campaignService.GetCampaignByMasterId(masterId);
+                return Ok(new
+                {
+                    error = false,
+                    message = "Campanhas obtidas com sucesso",
+                    data = campaigns
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    error = true,
+                    message = ex.Message
+                });
+            }
+        }
     }
 }

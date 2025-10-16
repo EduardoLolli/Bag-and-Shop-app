@@ -47,5 +47,10 @@ namespace Bag_and_Shop_app.Application.Services
             } while (codeExists);
             return code;
         }
+
+        public Task<List<CampaignResponseDTO>> GetCampaignByMasterId(int masterId)
+        {
+            return _campaignRepository.GetCampaignByMasterId(masterId);
+        }
     }
 }
