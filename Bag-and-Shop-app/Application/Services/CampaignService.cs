@@ -2,7 +2,6 @@
 using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
-using System.Threading.Tasks;
 
 namespace Bag_and_Shop_app.Application.Services
 {
@@ -19,17 +18,23 @@ namespace Bag_and_Shop_app.Application.Services
 
         public async Task<CampaignResponseDTO> CreateCampaign(Campaign campaign)
         {
-            CampaignResponseDTO createdCampaign = await _campaignRepository.AddCampaign(campaign);
-            Store store = new Store
+            try
             {
-                Name = "Loja",
-                CampaignId = createdCampaign.Id
-            };
-            Store storeCreated = await _storeRepository.AddStore(store);
+                CampaignResponseDTO createdCampaign = await _campaignRepository.AddCampaign(campaign);
+                Store store = new Store
+                {
+                    Name = "Loja",
+                    CampaignId = createdCampaign.Id
+                };
+                Store storeCreated = await _storeRepository.AddStore(store);
 
-            return createdCampaign;
+                return createdCampaign;
 
-
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao criar campanha: " + ex.Message);
+            }
         }
 
         public async Task<string> GenerateCampaignCode()

@@ -3,7 +3,6 @@ using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
 using Bag_and_Shop_app.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace Bag_and_Shop_app.Infraestructure.Repositories
 {
@@ -17,18 +16,25 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
         }
         public Task<UserResponseDTO> addNewUser(User user)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
-            UserResponseDTO newUser = new UserResponseDTO
+            try
             {
-                Username = user.Username,
-                Email = user.Email,
-            };
-            return Task.FromResult(newUser);
+                _context.Users.Add(user);
+                _context.SaveChanges();
+                UserResponseDTO newUser = new UserResponseDTO
+                {
+                    Username = user.Username,
+                    Email = user.Email,
+                };
+                return Task.FromResult(newUser);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao adicionar usuário: " + ex.Message);
+            }
         }
-        public Task<User> findUserByEmail(string email)
+        public async Task<User> findUserByEmail(string email)
         {
-            return _context.Users.FirstAsync(u => u.Email == email);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<List<UserResponseDTO>> getAllUsers()
