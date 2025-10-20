@@ -4,6 +4,7 @@ using Bag_and_Shop_app.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bag_and_Shop_app.Migrations
 {
     [DbContext(typeof(BagAndShopDBContext))]
-    partial class BagAndShopDBContextModelSnapshot : ModelSnapshot
+    [Migration("20251020125041_tentativaDeCorreçãoDoCharacter")]
+    partial class tentativaDeCorreçãoDoCharacter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,19 +36,7 @@ namespace Bag_and_Shop_app.Migrations
                     b.Property<int>("CharacterId")
                         .HasColumnType("int");
 
-                    b.Property<double>("CurrentWeight")
-                        .HasColumnType("float");
-
-                    b.Property<decimal>("Gold")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<double>("WeightLimit")
-                        .HasColumnType("float");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CharacterId")
-                        .IsUnique();
 
                     b.ToTable("Bags");
                 });
@@ -61,13 +52,13 @@ namespace Bag_and_Shop_app.Migrations
                     b.Property<int>("BagId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Condition")
+                    b.Property<double>("Condicao")
                         .HasColumnType("float");
 
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int>("Quantidade")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -119,9 +110,6 @@ namespace Bag_and_Shop_app.Migrations
 
                     b.HasIndex("BootsId");
 
-                    b.HasIndex("CharacterId")
-                        .IsUnique();
-
                     b.HasIndex("GlovesId");
 
                     b.HasIndex("RingId");
@@ -172,8 +160,17 @@ namespace Bag_and_Shop_app.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BagId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BodyId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CampaignId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Gold")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -183,6 +180,10 @@ namespace Bag_and_Shop_app.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BagId");
+
+                    b.HasIndex("BodyId");
 
                     b.HasIndex("CampaignId");
 
@@ -199,37 +200,26 @@ namespace Bag_and_Shop_app.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AttributeBonus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AttributeDebuff")
+                    b.Property<int?>("BagId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DiceRoll")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IconPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsStackable")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MaxStackSize")
+                    b.Property<int?>("LojaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Rarity")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StoreId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -242,6 +232,10 @@ namespace Bag_and_Shop_app.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BagId");
+
+                    b.HasIndex("StoreId");
 
                     b.ToTable("Items");
                 });
@@ -306,10 +300,10 @@ namespace Bag_and_Shop_app.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
+                    b.Property<int>("PrecoVenda")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int>("Quantidade")
                         .HasColumnType("int");
 
                     b.Property<int>("StoreId")
@@ -380,17 +374,6 @@ namespace Bag_and_Shop_app.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.Bag", b =>
-                {
-                    b.HasOne("Bag_and_Shop_app.Domain.Entities.Character", "Character")
-                        .WithOne("Bag")
-                        .HasForeignKey("Bag_and_Shop_app.Domain.Entities.Bag", "CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Character");
-                });
-
             modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.BagItem", b =>
                 {
                     b.HasOne("Bag_and_Shop_app.Domain.Entities.Bag", "Bag")
@@ -400,7 +383,7 @@ namespace Bag_and_Shop_app.Migrations
                         .IsRequired();
 
                     b.HasOne("Bag_and_Shop_app.Domain.Entities.Item", "Item")
-                        .WithMany("BagItems")
+                        .WithMany()
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -424,12 +407,6 @@ namespace Bag_and_Shop_app.Migrations
                         .WithMany()
                         .HasForeignKey("BootsId");
 
-                    b.HasOne("Bag_and_Shop_app.Domain.Entities.Character", "Character")
-                        .WithOne("Body")
-                        .HasForeignKey("Bag_and_Shop_app.Domain.Entities.Body", "CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Bag_and_Shop_app.Domain.Entities.Item", "Gloves")
                         .WithMany()
                         .HasForeignKey("GlovesId");
@@ -451,8 +428,6 @@ namespace Bag_and_Shop_app.Migrations
                     b.Navigation("Armor");
 
                     b.Navigation("Boots");
-
-                    b.Navigation("Character");
 
                     b.Navigation("Gloves");
 
@@ -484,6 +459,18 @@ namespace Bag_and_Shop_app.Migrations
 
             modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.Character", b =>
                 {
+                    b.HasOne("Bag_and_Shop_app.Domain.Entities.Bag", "Bag")
+                        .WithMany()
+                        .HasForeignKey("BagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bag_and_Shop_app.Domain.Entities.Body", "Body")
+                        .WithMany()
+                        .HasForeignKey("BodyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Bag_and_Shop_app.Domain.Entities.Campaign", "Campaign")
                         .WithMany("Characters")
                         .HasForeignKey("CampaignId")
@@ -496,9 +483,28 @@ namespace Bag_and_Shop_app.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Bag");
+
+                    b.Navigation("Body");
+
                     b.Navigation("Campaign");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.Item", b =>
+                {
+                    b.HasOne("Bag_and_Shop_app.Domain.Entities.Bag", "Bag")
+                        .WithMany()
+                        .HasForeignKey("BagId");
+
+                    b.HasOne("Bag_and_Shop_app.Domain.Entities.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId");
+
+                    b.Navigation("Bag");
+
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.ItemAtribute", b =>
@@ -514,13 +520,11 @@ namespace Bag_and_Shop_app.Migrations
 
             modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.Store", b =>
                 {
-                    b.HasOne("Bag_and_Shop_app.Domain.Entities.Campaign", "Campaign")
+                    b.HasOne("Bag_and_Shop_app.Domain.Entities.Campaign", null)
                         .WithOne("Store")
                         .HasForeignKey("Bag_and_Shop_app.Domain.Entities.Store", "CampaignId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Campaign");
                 });
 
             modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.StoreItem", b =>
@@ -532,7 +536,7 @@ namespace Bag_and_Shop_app.Migrations
                         .IsRequired();
 
                     b.HasOne("Bag_and_Shop_app.Domain.Entities.Store", "Store")
-                        .WithMany()
+                        .WithMany("Items")
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -555,18 +559,9 @@ namespace Bag_and_Shop_app.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.Character", b =>
+            modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.Store", b =>
                 {
-                    b.Navigation("Bag")
-                        .IsRequired();
-
-                    b.Navigation("Body")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.Item", b =>
-                {
-                    b.Navigation("BagItems");
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.SystemEntity", b =>

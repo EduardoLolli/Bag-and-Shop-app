@@ -4,12 +4,14 @@ namespace Bag_and_Shop_app.Application.DTOs.Character
 {
     public class CharacterCreationRequestDTO
     {
-        [Required(ErrorMessage = "O nome do sistema é obrigatório.")]
-        [StringLength(60, MinimumLength = 3)]
+        [Range(1, int.MaxValue, ErrorMessage = "O código da campanha é obrigatório.")]
+        public int CampaignId { get; set; } 
+
+        [Required(ErrorMessage = "A Nome do personagem é obrigatório.")]
         public string Name { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "A Descrição é obrigatório.")]
-        public string Description { get; set; } = string.Empty;
+        [Range(1, int.MaxValue, ErrorMessage = "O código da campanha é obrigatório.")]
+        public int UserId { get; set; }
     }
 
 }
