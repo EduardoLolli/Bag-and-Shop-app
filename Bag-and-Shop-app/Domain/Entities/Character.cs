@@ -12,10 +12,10 @@ namespace Bag_and_Shop_app.Domain.Entities
         public int CampaignId { get; set; }
         [ForeignKey(nameof(CampaignId))]
         public Campaign Campaign { get; set; } = null!;
-
         public Bag Bag { get; set; } = null!;
-
         public Body Body { get; set; } = null!;
+
+        public bool IsAlive { get; set; } = true;
 
     }
 }

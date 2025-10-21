@@ -16,7 +16,7 @@ namespace Bag_and_Shop_app.Controllers
             _characterService = characterService;
         }
 
-        [HttpGet("v1/createCharacter")]
+        [HttpPost("v1/createCharacter")]
         public async Task<ActionResult<CharacterCreationResponseDTO>> CreateCharacter(CharacterCreationRequestDTO dto)
         {
             try

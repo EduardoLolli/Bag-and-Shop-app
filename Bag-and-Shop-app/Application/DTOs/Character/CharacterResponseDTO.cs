@@ -3,15 +3,12 @@ using System.ComponentModel.DataAnnotations;
 namespace Bag_and_Shop_app.Application.DTOs.Character
 {
 
-    public class CharacterCreationResponseDTO
+    public class CharacterResponseDTO
     {
 
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int UserId { get; set; }
-        public int BagId { get; set; }
-        public decimal Gold { get; set; }
-        public object Campaign { get; set; } = null!;
-        public int BodyId { get; set; }
+        
     }
 }

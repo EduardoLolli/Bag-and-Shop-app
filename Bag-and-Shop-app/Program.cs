@@ -3,6 +3,7 @@ using Bag_and_Shop_app.Application.Services;
 using Bag_and_Shop_app.Domain.Interfaces;
 using Bag_and_Shop_app.Infraestructure.Data;
 using Bag_and_Shop_app.Infraestructure.Repositories;
+using BagAndShopApp.Domain.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -42,6 +43,10 @@ builder.Services.AddScoped<ISystemRepository, SystemRepository>();
 builder.Services.AddScoped<ICampaignService, CampaignService>();
 builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
 builder.Services.AddScoped<IStoreRepository, StoreRepository>();
+builder.Services.AddScoped<ICharacterService, CharacterService>();
+builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
+builder.Services.AddScoped<IBagRepository, bagRepository>();
+builder.Services.AddScoped<IBodyRepository, BodyRepository>();
 
 var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.Key.secret);
 
