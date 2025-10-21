@@ -25,26 +25,22 @@ namespace Bag_and_Shop_app.Application.Services
         }
         public async Task<CharacterCreationResponseDTO> CreateCharacter(CharacterCreationRequestDTO character)
         {
-            //Busca a camapanha vinculada ao Código da Campanha
             try
             {
                 var campaign = await _campaignRepository.GetCampaignByCCode(character.CampaignCode);
-
-
                 Character newCharacter = new Character
                 {
                     Name = character.Name,
                     UserId = character.UserId,
                     CampaignId = campaign.Id
                 };
-
                 CharacterResponseDTO newCreatedCharacter = await _characterRepository.AddCharacter(newCharacter);
                 BagResponseDTO CreatedBag = await _bagRepository.CreateBagForCharacter(newCreatedCharacter.Id);
                 BodyResponseDTO CreatedBody = await _bodyRepository.CreateCharacterBody(newCreatedCharacter.Id);
                 
-
                 return await Task.FromResult(new CharacterCreationResponseDTO
                 {
+                    Id = newCreatedCharacter.Id,
                     Name = character.Name,
                     UserId = character.UserId,
                     Campaign = campaign,

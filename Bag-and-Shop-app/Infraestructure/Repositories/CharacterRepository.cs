@@ -28,7 +28,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             }
             catch (Exception)
             {
-                return Task.FromResult<CharacterResponseDTO>(null);
+                throw new Exception("Erro ao adicionar personagem.");
             }
         }
     }

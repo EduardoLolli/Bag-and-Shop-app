@@ -5,7 +5,7 @@
 namespace Bag_and_Shop_app.Migrations
 {
     /// <inheritdoc />
-    public partial class campaigncorrection : Migration
+    public partial class Campaigncorrection : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

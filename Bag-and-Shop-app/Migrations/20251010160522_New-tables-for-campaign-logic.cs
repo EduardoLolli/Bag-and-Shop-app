@@ -5,7 +5,7 @@
 namespace Bag_and_Shop_app.Migrations
 {
     /// <inheritdoc />
-    public partial class newtablesforcampaignlogic : Migration
+    public partial class Newtablesforcampaignlogic : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
