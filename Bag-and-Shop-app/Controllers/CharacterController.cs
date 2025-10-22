@@ -22,8 +22,6 @@ namespace Bag_and_Shop_app.Controllers
             try
             {
                 CharacterCreationResponseDTO Character = await _characterService.CreateCharacter(dto);
-
-
                 return Ok(new
                 {
                     error = false,

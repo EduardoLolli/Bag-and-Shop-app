@@ -8,7 +8,7 @@ namespace Bag_and_Shop_app.Application.Interfaces
 
         String GenerateToken(User user);
         String HashPass(String password);
-        User ValidateToken(AuthRequestDTO token);
+        Task<User> ValidateToken(AuthRequestDTO token);
         Boolean VerifyPass(string passwordHash, string password);
     }
 }

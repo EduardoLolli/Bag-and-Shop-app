@@ -102,39 +102,48 @@ namespace Bag_and_Shop_app.Controllers
 
         }
         [AllowAnonymous]
-        [HttpPost("")]
-        public async Task<ActionResult> Auth([FromBody] AuthRequestDTO token)
+        [HttpGet("")]
+        public async Task<ActionResult> Auth()
         {
             try
             {
-                var user = _authService.ValidateToken(token);
-                if (user == null)
+            var authHeader = Request.Headers["Authorization"].FirstOrDefault();
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+            {
+                throw new Exception("Token não fornecido");
+            }
+
+            var tokenValue = authHeader.Substring("Bearer ".Length).Trim();
+
+            var user = await _authService.ValidateToken(new AuthRequestDTO { Token = tokenValue });
+            if (user == null)
+            {
+                throw new Exception("Token inválido");
+            }
+
+            return Ok(new
+            {
+                error = false,
+                message = "Token válido",
+                data = new
                 {
-                    throw new Exception("Token inválido");
+                user = new UserResponseDTO
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Email = user.Email,
+                    Role = user.Role
                 }
-                return Ok(new
-                {
-                    error = false,
-                    message = "Token válido",
-                    data = new
-                    {
-                        user = new UserResponseDTO
-                        {
-                            Id = user.Id,
-                            Username = user.Username,
-                            Email = user.Email,
-                            Role = user.Role
-                        }
-                    }
-                });
+                }
+            });
             }
             catch (Exception ex)
             {
-                return Unauthorized(new
-                {
-                    error = true,
-                    message = ex.Message
-                });
+            return Unauthorized(new
+            {
+                error = true,
+                message = ex.Message
+            });
             }
         }
     }

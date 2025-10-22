@@ -57,6 +57,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
                 {
                     Id = c.Id,
                     Name = c.Name,
+                    MasterId = c.MasterId,
                     SystemId = c.SystemId,
                     CampaignCode = c.CampaignCode
                 })

@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
+        public int MasterId { get; set; }
         public int SystemId { get; set; }
         public string CampaignCode { get; set; } = string.Empty;
 

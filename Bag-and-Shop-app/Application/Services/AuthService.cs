@@ -50,13 +50,13 @@ namespace Bag_and_Shop_app.Application.Services
             return tokenHandler.WriteToken(token);
         }
 
-        public User ValidateToken(AuthRequestDTO token)
+        public async Task<User> ValidateToken(AuthRequestDTO token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.Key.secret);
             try
             {
-                tokenHandler.ValidateToken(token.token, new TokenValidationParameters
+                tokenHandler.ValidateToken(token.Token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
