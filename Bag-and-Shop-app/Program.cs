@@ -17,7 +17,7 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddCors(options =>
 {
@@ -31,7 +31,7 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddEntityFrameworkSqlServer().AddDbContext<BagAndShopDBContext>(
+builder.Services.AddDbContext<BagAndShopDBContext>(
 options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"))
 );
 
@@ -47,6 +47,9 @@ builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IBagRepository, bagRepository>();
 builder.Services.AddScoped<IBodyRepository, BodyRepository>();
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddScoped<IItemService, ItemService>();
+
 
 var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.Key.secret);
 
