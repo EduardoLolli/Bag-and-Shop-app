@@ -22,6 +22,8 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             {
                 Id = campaign.Id,
                 Name = campaign.Name,
+                MasterId = campaign.MasterId,
+                PlayersLimit = campaign.PlayersLimit,
                 SystemId = campaign.SystemId,
                 CampaignCode = campaign.CampaignCode
             };
@@ -38,6 +40,8 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
                 {
                     Id = c.Id,
                     Name = c.Name,
+                    PlayersLimit = c.PlayersLimit,
+                    MasterId = c.MasterId,
                     SystemId = c.SystemId,
                     CampaignCode = c.CampaignCode
                 })
@@ -57,6 +61,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
                 {
                     Id = c.Id,
                     Name = c.Name,
+                    PlayersLimit = c.PlayersLimit,
                     MasterId = c.MasterId,
                     SystemId = c.SystemId,
                     CampaignCode = c.CampaignCode

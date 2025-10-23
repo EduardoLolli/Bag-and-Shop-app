@@ -10,5 +10,6 @@ namespace Bag_and_Shop_app.Application.DTOs.Campaign
         public int SystemId { get; set; }
         [Range(1, int.MaxValue, ErrorMessage = "O Id do mestre é obrigatório e deve ser um valor válido (maior que zero).")]
         public int MasterId { get; set; }
+        public int PlayersLimit { get; set; }
     }
 }
