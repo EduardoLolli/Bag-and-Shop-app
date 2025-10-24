@@ -1,5 +1,7 @@
+using Bag_and_Shop_app.Application.DTOs.Item;
 using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Application.Services;
+using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
 using Bag_and_Shop_app.Infraestructure.Data;
 using Bag_and_Shop_app.Infraestructure.Repositories;
@@ -7,6 +9,7 @@ using BagAndShopApp.Domain.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Nelibur.ObjectMapper;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,8 +19,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-
-builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddCors(options =>
 {
@@ -50,6 +51,8 @@ builder.Services.AddScoped<IBodyRepository, BodyRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<IItemService, ItemService>();
 
+TinyMapper.Bind<ItemCreationRequestDTO, Item>();
+TinyMapper.Bind<Item, ItemCreationResponseDTO>();
 
 var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.Key.secret);
 

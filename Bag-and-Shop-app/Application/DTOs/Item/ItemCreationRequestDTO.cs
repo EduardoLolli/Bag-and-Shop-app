@@ -14,9 +14,10 @@ namespace Bag_and_Shop_app.Application.DTOs.Item
         [Required(ErrorMessage = "O campo valor é obrigatório")]
         public decimal Value { get; set; }
         [Required(ErrorMessage = "O campo tipo é obrigatório")]
-        public string Type { get; set; } = string.Empty;
+        public TypeEnum Type { get; set; }
         [Required(ErrorMessage = "O campo raridade é obrigatório")]
         public RarityEnum Rarity { get; set; }
+
         public string IconPath { get; set; } = string.Empty;
         public string DiceRoll { get; set; } = null!;
         public int AttributeBonus { get; set; } = 0;

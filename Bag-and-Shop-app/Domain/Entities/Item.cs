@@ -9,7 +9,7 @@ namespace Bag_and_Shop_app.Domain.Entities
         public string Description { get; set; } = string.Empty;
         public decimal Weight { get; set; }
         public decimal Value { get; set; }
-        public string Type { get; set; } = string.Empty;
+        public TypeEnum Type { get; set; } 
         public RarityEnum Rarity { get; set; }
         public string IconPath { get; set; } = string.Empty;
         public string DiceRoll { get; set; } = string.Empty;
@@ -17,7 +17,6 @@ namespace Bag_and_Shop_app.Domain.Entities
         public int AttributeDebuff { get; set; }
         public bool IsStackable { get; set; }
         public int MaxStackSize { get; set; }
-        public ICollection<BagItem> BagItems { get; set; } = new List<BagItem>();
 
     }
 }
