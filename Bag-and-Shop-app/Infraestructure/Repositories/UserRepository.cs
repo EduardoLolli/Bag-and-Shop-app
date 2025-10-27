@@ -34,7 +34,14 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
         }
         public async Task<User> findUserByEmail(string email)
         {
-            return await _context.Users.FirstAsync(u => u.Email == email);
+            try
+            {
+                return await _context.Users.FirstAsync(u => u.Email == email);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public async Task<List<UserResponseDTO>> getAllUsers()

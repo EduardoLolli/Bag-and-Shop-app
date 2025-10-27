@@ -7,8 +7,8 @@ namespace Bag_and_Shop_app.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public decimal Weight { get; set; }
-        public decimal Value { get; set; }
+        public double Weight { get; set; }
+        public double Value { get; set; }
         public TypeEnum Type { get; set; } 
         public RarityEnum Rarity { get; set; }
         public string IconPath { get; set; } = string.Empty;
