@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Infraestructure\Repositories\StoreItemRepository.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="15.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.9" />
@@ -33,10 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Infraestructure\Configuration\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Infraestructure\Repositories\StoreItemRepository.cs" />
   </ItemGroup>
 
 </Project>

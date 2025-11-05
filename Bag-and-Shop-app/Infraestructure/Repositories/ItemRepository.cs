@@ -1,4 +1,3 @@
-using AutoMapper;
 using Bag_and_Shop_app.Application.DTOs.Item;
 using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
