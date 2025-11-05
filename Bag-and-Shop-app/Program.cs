@@ -53,8 +53,7 @@ builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<IStoreItemRepository, StoreItemRepository>();
 
-TinyMapper.Bind<ItemCreationRequestDTO, Item>();
-TinyMapper.Bind<Item, ItemCreationResponseDTO>();
+TinyMapperConfig.RegisterBindings();
 
 var key = Encoding.ASCII.GetBytes(Bag_and_Shop_app.Key.secret);
 

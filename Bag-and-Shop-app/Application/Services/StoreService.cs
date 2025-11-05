@@ -16,9 +16,8 @@ namespace Bag_and_Shop_app.Application.Services
             _storeItemRepository = storeItemRepository;
         }
 
-        public async Task<StoreItem> AddItemOnStore(AddItemOnStoreReqDTO dto)
+        public async Task<StoreItem> AddItemOnStore(StoreItem storeItem)
         {
-            StoreItem storeItem = TinyMapper.Map<StoreItem>(dto);
 
             return storeItem;
 

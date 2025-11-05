@@ -3,6 +3,7 @@ using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Nelibur.ObjectMapper;
 
 namespace Bag_and_Shop_app.Controllers
 {
@@ -21,7 +22,7 @@ namespace Bag_and_Shop_app.Controllers
         {
             try
             {
-                StoreItem storeItem = await _storeService.AddItemOnStore(dto);
+                StoreItem storeItem = TinyMapper.Map<StoreItem>(dto);
 
 
 

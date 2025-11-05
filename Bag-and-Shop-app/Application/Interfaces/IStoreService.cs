@@ -5,7 +5,7 @@ namespace Bag_and_Shop_app.Application.Interfaces
 {
     public interface IStoreService
     {
-        Task<StoreItem> AddItemOnStore(AddItemOnStoreReqDTO dto);
+        Task<StoreItem> AddItemOnStore(StoreItem dto);
 
 
     }
