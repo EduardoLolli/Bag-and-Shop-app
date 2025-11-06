@@ -18,7 +18,11 @@ namespace Bag_and_Shop_app.Application.Services
 
         public async Task<StoreItem> AddItemOnStore(StoreItem storeItem)
         {
-
+            Boolean itemExists = await _storeItemRepository.VerifyItemExistsOnStore(storeItem);
+            if (itemExists)
+            {
+                throw new Exception("Item já existe na loja");
+            }
             return storeItem;
 
         }

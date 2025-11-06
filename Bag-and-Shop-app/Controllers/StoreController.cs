@@ -24,12 +24,13 @@ namespace Bag_and_Shop_app.Controllers
             {
                 StoreItem storeItem = TinyMapper.Map<StoreItem>(dto);
 
+                storeItem =  await _storeService.AddItemOnStore(storeItem);
 
 
                 return Ok(new
                 {
                     error = false,
-                    message = "Item adicionado na loja com sucesso",
+                    message = "Item  adicionado na loja com sucesso",
                     data = storeItem
                 });
             }

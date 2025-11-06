@@ -1,7 +1,5 @@
-using Bag_and_Shop_app.Application.DTOs.Item;
 using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Application.Services;
-using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
 using Bag_and_Shop_app.Infraestructure.Data;
 using Bag_and_Shop_app.Infraestructure.Repositories;
@@ -9,7 +7,6 @@ using BagAndShopApp.Domain.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Nelibur.ObjectMapper;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
