@@ -26,7 +26,14 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
         public async Task<bool> verifyItemExists(int itemId)
         {
             
-            var item = await _context.Items.FirstOrDefaultAsync(i => i.Id == itemId);
+            var item = await _context.Items
+                                 .AsNoTracking()
+                                 .AnyAsync(i => i.Id == itemId);
+                                 
+            if (!item)
+            {
+                return false;
+            }
            
             return true;
         }
