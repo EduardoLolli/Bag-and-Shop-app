@@ -7,6 +7,8 @@ namespace Bag_and_Shop_app.Domain.Interfaces
     {
 
         Task<ItemCreationResponseDTO> RegisterItem(Item character);
+        Task<bool> verifyItemExists(int itemId);
+
     }
 
 }

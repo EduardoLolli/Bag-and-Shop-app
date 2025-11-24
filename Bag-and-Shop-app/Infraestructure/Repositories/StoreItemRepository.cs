@@ -23,7 +23,6 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
 
         public async Task<bool> VerifyItemExistsOnStore(StoreItem storeItem)
         {
-            // Valida entrada
             if (storeItem == null)
             {
                 throw new ArgumentNullException(nameof(storeItem));

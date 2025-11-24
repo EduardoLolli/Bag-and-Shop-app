@@ -8,7 +8,7 @@ namespace Bag_and_Shop_app.Application.DTOs.Item
         public double Weight { get; set; }
         public string Type { get; set; } = string.Empty;
         public string Rarity { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public int StockQuantity { get; set; }
     }
 }

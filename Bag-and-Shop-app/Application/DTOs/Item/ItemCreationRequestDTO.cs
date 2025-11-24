@@ -10,9 +10,9 @@ namespace Bag_and_Shop_app.Application.DTOs.Item
         [Required(ErrorMessage = "O campo descrição é obrigatório")]
         public string Description { get; set; } = string.Empty;
         [Required(ErrorMessage = "O campo peso é obrigatório")]
-        public decimal Weight { get; set; }
+        public double Weight { get; set; }
         [Required(ErrorMessage = "O campo valor é obrigatório")]
-        public decimal Value { get; set; }
+        public double Value { get; set; }
         [Required(ErrorMessage = "O campo tipo é obrigatório")]
         public TypeEnum Type { get; set; }
         [Required(ErrorMessage = "O campo raridade é obrigatório")]
