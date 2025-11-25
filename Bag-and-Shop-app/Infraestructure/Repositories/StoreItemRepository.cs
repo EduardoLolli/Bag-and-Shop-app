@@ -2,6 +2,7 @@
 using Bag_and_Shop_app.Domain.Interfaces;
 using Bag_and_Shop_app.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Nelibur.ObjectMapper;
 
 namespace Bag_and_Shop_app.Infraestructure.Repositories
 {
@@ -15,29 +16,28 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
 
         public async Task<StoreItem> AddOnStore(StoreItem storeItem)
         {
-            _context.Add(storeItem);
-            _context.SaveChanges();
-            return storeItem;
+            try
+            {
+                StoreItem? Item = await _context.StoreItems.FirstOrDefaultAsync(si => si.ItemId == storeItem.ItemId);
+                if (Item != null)
+                {
+                    Item.Quantity = storeItem.Quantity + Item.Quantity;
+                    Item.Price = storeItem.Price;
+                    _context.StoreItems.Update(Item);
+                    await _context.SaveChangesAsync();
+                    return Item;
+                }
+                else
+                {
+                    await _context.StoreItems.AddAsync(storeItem);
+                    await _context.SaveChangesAsync();
+                    return storeItem;
+                }
 
-        }
-
-        public async Task<bool> VerifyItemExistsOnStore(StoreItem storeItem)
-        {
-            if (storeItem == null)
-            {
-                throw new ArgumentNullException(nameof(storeItem));
             }
-            var item = await _context.StoreItems
-                                 .AsNoTracking()
-                                 .AnyAsync(si => si.StoreId == storeItem.StoreId
-                                               && si.ItemId == storeItem.ItemId);
-            if (item)
+            catch (Exception ex)
             {
-                return true;
-            }
-            else
-            {
-                return false;
+                throw new Exception("Erro ao adicionar item na loja: " + ex.Message);
             }
         }
     }

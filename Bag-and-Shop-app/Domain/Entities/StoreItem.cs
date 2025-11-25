@@ -12,6 +12,6 @@ namespace Bag_and_Shop_app.Domain.Entities
         [ForeignKey(nameof(ItemId))]
         public Item Item { get; set; } = null!;
         public int Quantity { get; set; } = 0;
-        public int Price { get; set; } = 0;
+        public double Price { get; set; } = 0;
     }
 }
