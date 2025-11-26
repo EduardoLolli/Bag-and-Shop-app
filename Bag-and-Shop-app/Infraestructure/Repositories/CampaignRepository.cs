@@ -16,18 +16,25 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
 
         public Task<CampaignResponseDTO> AddCampaign(Campaign campaign)
         {
-            _bagAndShopDBContext.Campaigns.Add(campaign);
-            _bagAndShopDBContext.SaveChanges();
-            CampaignResponseDTO campaignResponseDTO = new CampaignResponseDTO
+            try
             {
-                Id = campaign.Id,
-                Name = campaign.Name,
-                MasterId = campaign.MasterId,
-                PlayersLimit = campaign.PlayersLimit,
-                SystemId = campaign.SystemId,
-                CampaignCode = campaign.CampaignCode
-            };
-            return Task.FromResult(campaignResponseDTO);
+                _bagAndShopDBContext.Campaigns.Add(campaign);
+                _bagAndShopDBContext.SaveChanges();
+                CampaignResponseDTO campaignResponseDTO = new CampaignResponseDTO
+                {
+                    Id = campaign.Id,
+                    Name = campaign.Name,
+                    MasterId = campaign.MasterId,
+                    PlayersLimit = campaign.PlayersLimit,
+                    SystemId = campaign.SystemId,
+                    CampaignCode = campaign.CampaignCode
+                };
+                return Task.FromResult(campaignResponseDTO);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Falha ao criar a campanha.");
+            }
         }
 
         public async Task<CampaignResponseDTO> GetCampaignByCCode(string campaignCode)

@@ -1,6 +1,7 @@
 ﻿using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
 using Bag_and_Shop_app.Infraestructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bag_and_Shop_app.Infraestructure.Repositories
 {
@@ -13,10 +14,26 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
         }
 
         public Task<Store> AddStore(Store store)
-        {
+        {try{
             _context.Stores.Add(store);
             _context.SaveChanges();
-            return Task.FromResult(store);
+                return Task.FromResult(store);
+            } catch(Exception e)
+            {
+                throw new Exception("Falha ao criar loja");
+            }
+        }
+
+        public async Task<bool> VerifyStoreExists(int storeId)
+        {
+            var store = await _context.Stores
+                                 .AsNoTracking()
+                                 .AnyAsync(s => s.Id == storeId);
+            if (!store)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

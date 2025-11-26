@@ -30,6 +30,14 @@ namespace Bag_and_Shop_app.Application.Services
                 {
                     throw new Exception("Item inexistente");
                 }
+
+                Boolean StoreExists = await _storeRepository.VerifyStoreExists(storeItem.StoreId);
+
+                if (!StoreExists)
+                {
+                    throw new Exception("Loja inexistente");
+                }
+
                 storeItem = await _storeItemRepository.AddOnStore(storeItem);
                 return storeItem;
             }

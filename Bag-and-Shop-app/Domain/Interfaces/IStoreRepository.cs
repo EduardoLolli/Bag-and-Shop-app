@@ -5,5 +5,7 @@ namespace Bag_and_Shop_app.Domain.Interfaces
     public interface IStoreRepository
     {
         Task<Store> AddStore(Store store);
+        Task<bool> VerifyStoreExists(int storeID);
+
     }
 }
