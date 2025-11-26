@@ -14,7 +14,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
         {
             _context = context;
         }
-        public Task<UserResponseDTO> addNewUser(User user)
+        public Task<UserResponseDTO> AddNewUser(User user)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
                 throw new Exception("Erro ao adicionar usuário: " + ex.Message);
             }
         }
-        public async Task<User> findUserByEmail(string email)
+        public async Task<User?> FindUserByEmail(string email)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             }
         }
 
-        public async Task<List<UserResponseDTO>> getAllUsers()
+        public async Task<List<UserResponseDTO>> GetAllUsers()
         {
             var users = await _context.Users
                 .Select(u => new UserResponseDTO

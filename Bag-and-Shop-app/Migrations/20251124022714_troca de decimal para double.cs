@@ -5,7 +5,7 @@
 namespace Bag_and_Shop_app.Migrations
 {
     /// <inheritdoc />
-    public partial class trocadedecimalparadouble : Migration
+    public partial class trocade_decimalparadouble : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

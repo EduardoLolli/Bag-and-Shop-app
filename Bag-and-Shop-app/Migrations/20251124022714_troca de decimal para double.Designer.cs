@@ -13,7 +13,7 @@ namespace Bag_and_Shop_app.Migrations
 {
     [DbContext(typeof(BagAndShopDBContext))]
     [Migration("20251124022714_troca de decimal para double")]
-    partial class trocadedecimalparadouble
+    partial class trocade_decimalparadouble
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -3,6 +3,7 @@ using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
 using Bag_and_Shop_app.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Nelibur.ObjectMapper;
 
 namespace Bag_and_Shop_app.Infraestructure.Repositories
 {
@@ -20,20 +21,12 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             {
                 _bagAndShopDBContext.Campaigns.Add(campaign);
                 _bagAndShopDBContext.SaveChanges();
-                CampaignResponseDTO campaignResponseDTO = new CampaignResponseDTO
-                {
-                    Id = campaign.Id,
-                    Name = campaign.Name,
-                    MasterId = campaign.MasterId,
-                    PlayersLimit = campaign.PlayersLimit,
-                    SystemId = campaign.SystemId,
-                    CampaignCode = campaign.CampaignCode
-                };
+                CampaignResponseDTO campaignResponseDTO = TinyMapper.Map<CampaignResponseDTO>(campaign);
                 return Task.FromResult(campaignResponseDTO);
             }
             catch (Exception e)
             {
-                throw new Exception("Falha ao criar a campanha.");
+                throw new Exception("Falha ao criar a campanha: " + e.Message);
             }
         }
 

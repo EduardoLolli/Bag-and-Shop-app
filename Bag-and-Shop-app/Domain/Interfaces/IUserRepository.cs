@@ -5,8 +5,8 @@ namespace Bag_and_Shop_app.Domain.Interfaces
 {
     public interface IUserRepository
     {
-        Task<UserResponseDTO> addNewUser(User user);
-        Task<User> findUserByEmail(string email);
-        Task<List<UserResponseDTO>> getAllUsers();
+        Task<UserResponseDTO> AddNewUser(User user);
+        Task<User?> FindUserByEmail(string email);
+        Task<List<UserResponseDTO>> GetAllUsers();
     }
 }

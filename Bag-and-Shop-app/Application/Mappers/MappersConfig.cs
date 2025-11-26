@@ -1,3 +1,4 @@
+using Bag_and_Shop_app.Application.DTOs.Campaign;
 using Bag_and_Shop_app.Application.DTOs.Item;
 using Bag_and_Shop_app.Application.DTOs.Store;
 using Bag_and_Shop_app.Domain.Entities;
@@ -10,5 +11,6 @@ public static class TinyMapperConfig
         TinyMapper.Bind<AddItemOnStoreReqDTO, StoreItem>();
         TinyMapper.Bind<ItemCreationRequestDTO, Item>();
         TinyMapper.Bind<Item, ItemCreationResponseDTO>();
+        TinyMapper.Bind<Campaign, CampaignRequestDTO>();
     }
 }

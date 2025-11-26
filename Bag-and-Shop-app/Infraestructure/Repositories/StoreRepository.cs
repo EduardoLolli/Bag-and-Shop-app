@@ -20,7 +20,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
                 return Task.FromResult(store);
             } catch(Exception e)
             {
-                throw new Exception("Falha ao criar loja");
+                throw new Exception("Falha ao criar loja: " + e.Message);
             }
         }
 
