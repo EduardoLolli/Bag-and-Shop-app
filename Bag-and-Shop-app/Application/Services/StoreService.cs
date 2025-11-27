@@ -1,8 +1,6 @@
-﻿using Bag_and_Shop_app.Application.DTOs.Store;
-using Bag_and_Shop_app.Application.Interfaces;
+﻿using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
-using Nelibur.ObjectMapper;
 
 namespace Bag_and_Shop_app.Application.Services
 {
@@ -25,14 +23,13 @@ namespace Bag_and_Shop_app.Application.Services
         {
             try
             {
-                Boolean ItemExiasts = await _itemRepository.verifyItemExists(storeItem.ItemId);
+                Boolean ItemExiasts = await _itemRepository.VerifyItemExists(storeItem.ItemId);
                 if (!ItemExiasts)
                 {
                     throw new Exception("Item inexistente");
                 }
 
                 Boolean StoreExists = await _storeRepository.VerifyStoreExists(storeItem.StoreId);
-
                 if (!StoreExists)
                 {
                     throw new Exception("Loja inexistente");
@@ -46,6 +43,26 @@ namespace Bag_and_Shop_app.Application.Services
                 throw new Exception("Erro ao adicionar item na loja: " + ex.Message);
             }
 
+        }
+
+        public async Task<List<Item?>> GetItemsByStore(int storeId)
+        {
+            try
+            {
+                Boolean store = await _storeRepository.VerifyStoreExists(storeId);
+                if (!store)
+                {
+                    throw new Exception("Loja inexistente");
+                }
+
+                List<Item?> itemsList = await _itemRepository.GetItemsByStoreId(storeId);
+
+
+                return itemsList;
+            }catch(Exception e)
+            {
+                throw new Exception("Falha ao recuperar itens: " + e);
+            }
         }
     }
 }

@@ -1,9 +1,7 @@
 ﻿namespace Bag_and_Shop_app.Application.DTOs.Store
 {
-    public class AddItemOnStoreReqDTO
+    public class AddItemOnStoreReqDTO : StoreBaseReqDTO
     {
-        public int StoreId { get; set; }
-        public int ItemId { get; set; }
         public int Quantity { get; set; } = 0;
         public double Price { get; set; } = 0;
     }

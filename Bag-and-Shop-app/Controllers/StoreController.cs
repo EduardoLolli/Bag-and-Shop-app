@@ -17,6 +17,7 @@ namespace Bag_and_Shop_app.Controllers
         {
             _storeService = storeService;
         }
+
         [HttpPost("v1/AddItemOnStore")]
         public async Task<IActionResult> AddItemOnStore([FromBody] AddItemOnStoreReqDTO dto)
         {
@@ -24,7 +25,7 @@ namespace Bag_and_Shop_app.Controllers
             {
                 StoreItem storeItem = TinyMapper.Map<StoreItem>(dto);
 
-                storeItem =  await _storeService.AddItemOnStore(storeItem);
+                storeItem = await _storeService.AddItemOnStore(storeItem);
 
 
                 return Ok(new
@@ -42,6 +43,30 @@ namespace Bag_and_Shop_app.Controllers
                     message = ex.Message
                 });
 
+            }
+        }
+        [HttpPost("v1/GetProductsByStoreID")]
+        public async Task<IActionResult> GetProductsByStoreID([FromBody] StoreBaseReqDTO Store)
+        {
+            try
+            {
+                List<Item?> items = await _storeService.GetItemsByStore(Store.StoreId);
+
+
+                return Ok(new
+                {
+                    error = false,
+                    message = "Itens da loja obtidos com sucesso",
+                    data = items
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    error = true,
+                    message = ex.Message
+                });
             }
         }
     }
