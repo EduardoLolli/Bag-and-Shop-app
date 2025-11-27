@@ -35,12 +35,12 @@ namespace Bag_and_Shop_app.Controllers
                     PasswordHash = _authService.HashPass(dto.Password),
                     Role = "DEFAULT"
                 };
-                Boolean validEmail = await _userService.findUserByEmail(dto.Email) == null;
+                Boolean validEmail = await _userService.FindUserByEmail(dto.Email) == null;
                 if (!validEmail)
                 {
                     throw new Exception("Endereço de email já cadastrado");
                 }
-                UserResponseDTO newuser = await _userService.addUser(user);
+                UserResponseDTO newuser = await _userService.AddUser(user);
                 string token = _authService.GenerateToken(user);
                 return Ok(new
                 {
@@ -68,11 +68,7 @@ namespace Bag_and_Shop_app.Controllers
         {
             try
             {
-                User user = await _userService.findUserByEmail(dto.Email);
-                if (user == null)
-                {
-                    throw new Exception("Usuário ou senha inválidos");
-                }
+                User? user = await _userService.FindUserByEmail(dto.Email) ?? throw new Exception("Usuário ou senha inválidos"); ;
 
                 Boolean validPass = _authService.VerifyPass(user.PasswordHash, dto.Password);
                 if (!validPass)
@@ -107,43 +103,43 @@ namespace Bag_and_Shop_app.Controllers
         {
             try
             {
-            var authHeader = Request.Headers["Authorization"].FirstOrDefault();
-            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
-            {
-                throw new Exception("Token não fornecido");
-            }
-
-            var tokenValue = authHeader.Substring("Bearer ".Length).Trim();
-
-            var user = await _authService.ValidateToken(new AuthRequestDTO { Token = tokenValue });
-            if (user == null)
-            {
-                throw new Exception("Token inválido");
-            }
-
-            return Ok(new
-            {
-                error = false,
-                message = "Token válido",
-                data = new
+                var authHeader = Request.Headers["Authorization"].FirstOrDefault();
+                if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
                 {
-                user = new UserResponseDTO
+                    throw new Exception("Token não fornecido");
+                }
+
+                var tokenValue = authHeader.Substring("Bearer ".Length).Trim();
+
+                var user = await _authService.ValidateToken(new AuthRequestDTO { Token = tokenValue });
+                if (user == null)
                 {
-                    Id = user.Id,
-                    Username = user.Username,
-                    Email = user.Email,
-                    Role = user.Role
+                    throw new Exception("Token inválido");
                 }
-                }
-            });
+
+                return Ok(new
+                {
+                    error = false,
+                    message = "Token válido",
+                    data = new
+                    {
+                        user = new UserResponseDTO
+                        {
+                            Id = user.Id,
+                            Username = user.Username,
+                            Email = user.Email,
+                            Role = user.Role
+                        }
+                    }
+                });
             }
             catch (Exception ex)
             {
-            return Unauthorized(new
-            {
-                error = true,
-                message = ex.Message
-            });
+                return Unauthorized(new
+                {
+                    error = true,
+                    message = ex.Message
+                });
             }
         }
     }

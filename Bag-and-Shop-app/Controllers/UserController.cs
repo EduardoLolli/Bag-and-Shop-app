@@ -19,11 +19,11 @@ namespace Bag_and_Shop_app.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<UserResponseDTO>>> allUsers()
+        public async Task<ActionResult<List<UserResponseDTO>>> AllUsers()
         {
             try
             {
-                List<UserResponseDTO> users = await _userService.getAllUsers();
+                List<UserResponseDTO> users = await _userService.GetAllUsers();
                 return Ok(new
                 {
                     error = false,

@@ -5,6 +5,7 @@ using Bag_and_Shop_app.Domain.Entities;
 using BagAndShopApp.Application.DTOs.Character;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Nelibur.ObjectMapper;
 
 namespace Bag_and_Shop_app.Controllers
 {
@@ -24,19 +25,14 @@ namespace Bag_and_Shop_app.Controllers
         {
             try
             {
-                Campaign campaign = new Campaign
-                {
-                    Name = dto.Name,
-                    SystemId = dto.SystemId,
-                    CampaignCode = await _campaignService.GenerateCampaignCode(),
-                    MasterId = dto.MasterId
-                };
-                CampaignResponseDTO newCampaign = await _campaignService.CreateCampaign(campaign);
+                Campaign newCampaign = TinyMapper.Map<Campaign>(dto);
+                newCampaign.CampaignCode = await _campaignService.GenerateCampaignCode();
+                CampaignResponseDTO campaignResponse = await _campaignService.CreateCampaign(newCampaign);
                 return Ok(new
                 {
                     error = false,
                     message = "Campanha criada com sucesso",
-                    data = newCampaign
+                    data = campaignResponse
                 });
             }
             catch (Exception ex)

@@ -44,6 +44,18 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             }
         }
 
+        public async Task<User?> FindUserById(int id)
+        {
+            try
+            {
+                return await _context.Users.FirstAsync(u => u.Id == id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public async Task<List<UserResponseDTO>> GetAllUsers()
         {
             var users = await _context.Users

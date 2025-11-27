@@ -7,6 +7,6 @@ namespace Bag_and_Shop_app.Domain.Interfaces
     {
         Task<SystemResponseDTO> AddSystem(SystemEntity system); 
         Task<List<SystemResponseDTO>> GetSystems();
-        Task<SystemResponseDTO> getSystemById(int Id);
+        Task<SystemResponseDTO?> GetSystemById(int Id);
     }
 }

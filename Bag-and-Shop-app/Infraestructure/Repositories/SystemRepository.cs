@@ -41,18 +41,24 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             return await systems;
         }
 
-        public async Task<SystemResponseDTO> getSystemById(int Id) { 
-            var system = await _context.SystemEntities
-                .Where(s => s.Id == Id)
-                .Select(s => new SystemResponseDTO
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    Description = s.Description,
-                })
-                .FirstAsync();
-            return system;
-
+        public async Task<SystemResponseDTO?> GetSystemById(int Id)
+        {
+            try
+            {
+                var system = await _context.SystemEntities
+                    .Where(s => s.Id == Id)
+                    .Select(s => new SystemResponseDTO
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                        Description = s.Description,
+                    })
+                    .FirstAsync();
+                return system;
+            } catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

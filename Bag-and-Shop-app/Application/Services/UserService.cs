@@ -11,20 +11,20 @@ namespace Bag_and_Shop_app.Application.Services
         {
             _userRepository = userRepository;
         }
-        public Task<UserResponseDTO> addUser(User user)
+        public Task<UserResponseDTO> AddUser(User user)
         {
-            UserResponseDTO newUser = _userRepository.addNewUser(user).Result;
+            UserResponseDTO newUser = _userRepository.AddNewUser(user).Result;
             return Task.FromResult(newUser);
         }
-        public Task<User> findUserByEmail(string email)
+        public Task<User?> FindUserByEmail(string email)
         {
-            User user = _userRepository.findUserByEmail(email).Result;
+            User? user = _userRepository.FindUserByEmail(email).Result;
             return Task.FromResult(user);
         }
 
-        public async Task<List<UserResponseDTO>> getAllUsers()
+        public async Task<List<UserResponseDTO>> GetAllUsers()
         {
-            List<UserResponseDTO> users = await _userRepository.getAllUsers();
+            List<UserResponseDTO> users = await _userRepository.GetAllUsers();
             return users;
         }
     }

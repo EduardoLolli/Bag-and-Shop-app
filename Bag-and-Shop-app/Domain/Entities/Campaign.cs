@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int SystemId { get; set; }
-        public int PlayersLimit { get; set; }
+        public int PlayersLimit { get; set; } = 10;
         public SystemEntity System { get; set; } = null!;
         public int MasterId { get; set; }
         public User Master { get; set; } = null!;

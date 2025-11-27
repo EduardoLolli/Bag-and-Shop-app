@@ -11,6 +11,7 @@ public static class TinyMapperConfig
         TinyMapper.Bind<AddItemOnStoreReqDTO, StoreItem>();
         TinyMapper.Bind<ItemCreationRequestDTO, Item>();
         TinyMapper.Bind<Item, ItemCreationResponseDTO>();
-        TinyMapper.Bind<Campaign, CampaignRequestDTO>();
+        TinyMapper.Bind<Campaign, CampaignResponseDTO>();
+        TinyMapper.Bind<CampaignRequestDTO, Campaign>();
     }
 }
