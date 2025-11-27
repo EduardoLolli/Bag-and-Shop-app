@@ -21,13 +21,10 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             {
                 List<Item> items = await _context.StoreItems
                     .AsNoTracking()
-                    .Where(si => si.StoreId == storeId)
+                    .Where(si => si.StoreId == storeId && si.Quantity > 0)
                     .Select(si => si.Item)
                     .ToListAsync();
-                
-
                 return items;
-
             }
             catch (Exception e)
             {
@@ -43,19 +40,12 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             return Task.FromResult(responseDto);
         }
 
-        public async Task<bool> VerifyItemExists(int itemId)
+        public async Task<Item> VerifyItemExists(int itemId)
         {
-
-            var item = await _context.Items
+            Item item = await _context.Items
                                  .AsNoTracking()
-                                 .AnyAsync(i => i.Id == itemId);
-
-            if (!item)
-            {
-                return false;
-            }
-
-            return true;
+                                 .FirstOrDefaultAsync(i => i.Id == itemId) ?? null!;
+            return item;
         }
     }
 }

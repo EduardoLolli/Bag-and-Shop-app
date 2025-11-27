@@ -14,26 +14,24 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
         }
 
         public Task<Store> AddStore(Store store)
-        {try{
-            _context.Stores.Add(store);
-            _context.SaveChanges();
+        {
+            try
+            {
+                _context.Stores.Add(store);
+                _context.SaveChanges();
                 return Task.FromResult(store);
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw new Exception("Falha ao criar loja: " + e.Message);
             }
         }
 
-        public async Task<bool> VerifyStoreExists(int storeId)
+        public async Task<Store> VerifyStoreExists(int storeId)
         {
-            var store = await _context.Stores
-                                 .AsNoTracking()
-                                 .AnyAsync(s => s.Id == storeId);
-            if (!store)
-            {
-                return false;
-            }
-            return true;
+            Store store = await _context.Stores.AsNoTracking()
+                .FirstOrDefaultAsync(s => s.Id == storeId) ?? null!;
+            return store;
         }
     }
 }

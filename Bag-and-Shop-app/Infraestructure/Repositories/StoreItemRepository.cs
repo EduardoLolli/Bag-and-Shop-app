@@ -14,29 +14,55 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             _context = context;
         }
 
+        public async Task<StoreItem> GetItemById(int itemId)
+        {
+            try
+            {
+                StoreItem Item = await _context.StoreItems.FirstOrDefaultAsync(si => si.ItemId == itemId) ?? null!;
+                return Item;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro aa recuperar item:");
+            }
+        }
         public async Task<StoreItem> AddOnStore(StoreItem storeItem)
         {
             try
             {
-                StoreItem? Item = await _context.StoreItems.FirstOrDefaultAsync(si => si.ItemId == storeItem.ItemId);
-                if (Item != null)
-                {
-                    Item.Quantity = storeItem.Quantity + Item.Quantity;
-                    _context.StoreItems.Update(Item);
-                    await _context.SaveChangesAsync();
-                    return Item;
-                }
-                else
-                {
-                    await _context.StoreItems.AddAsync(storeItem);
-                    await _context.SaveChangesAsync();
-                    return storeItem;
-                }
-
+                await _context.StoreItems.AddAsync(storeItem);
+                await _context.SaveChangesAsync();
+                return storeItem;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Erro ao adicionar item na loja: " + ex.Message);
+                throw new Exception("Erro ao adicionar item na loja.");
+            }
+        }
+
+        public async Task UpdateOnStore(StoreItem storeItem)
+        {
+            try
+            {
+                _context.StoreItems.Update(storeItem);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro ao atualizar item na loja.");
+            }
+        }
+
+
+        public async Task<StoreItem> RemoveFromStore(StoreItem storeItem)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro ao remover item da loja.");
             }
         }
     }

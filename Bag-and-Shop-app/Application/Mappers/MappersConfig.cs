@@ -8,10 +8,11 @@ public static class TinyMapperConfig
 {
     public static void RegisterBindings()
     {
-        TinyMapper.Bind<AddItemOnStoreReqDTO, StoreItem>();
+        TinyMapper.Bind<ItemMovimentationDTO, StoreItem>();
         TinyMapper.Bind<ItemCreationRequestDTO, Item>();
         TinyMapper.Bind<Item, ItemCreationResponseDTO>();
         TinyMapper.Bind<Campaign, CampaignResponseDTO>();
         TinyMapper.Bind<CampaignRequestDTO, Campaign>();
+        TinyMapper.Bind<StoreItem, ItemMovResponseDTO>();
     }
 }

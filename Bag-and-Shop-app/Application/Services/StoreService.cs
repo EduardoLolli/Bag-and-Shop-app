@@ -18,22 +18,48 @@ namespace Bag_and_Shop_app.Application.Services
             _storeItemRepository = storeItemRepository;
             _itemRepository = itemRepository;
         }
-
+        public async Task<List<Item>> GetItemsByStore(int storeId)
+        {
+            try
+            {
+                Store store = await _storeRepository.VerifyStoreExists(storeId) ?? throw new Exception("Loja inexistente");
+                List<Item> itemsList = await _itemRepository.GetItemsByStoreId(storeId);
+                return itemsList;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Falha ao recuperar itens: " + e);
+            }
+        }
         public async Task<StoreItem> AddItemOnStore(StoreItem storeItem)
         {
             try
             {
-                Boolean ItemExiasts = await _itemRepository.VerifyItemExists(storeItem.ItemId);
-                if (!ItemExiasts)
+                Store store = await _storeRepository.VerifyStoreExists(storeItem.StoreId) ?? throw new Exception("Loja inexistente");
+                Item ItemExists = await _itemRepository.VerifyItemExists(storeItem.ItemId) ?? throw new Exception("Item inexistente");
+
+                if (ItemExists.IsStackable == false)
                 {
-                    throw new Exception("Item inexistente");
+                    storeItem.Quantity = 1;
+                    return await _storeItemRepository.AddOnStore(storeItem);
                 }
 
-                Boolean StoreExists = await _storeRepository.VerifyStoreExists(storeItem.StoreId);
-                if (!StoreExists)
+                StoreItem item = await _storeItemRepository.GetItemById(storeItem.ItemId);
+                if (item != null)
                 {
-                    throw new Exception("Loja inexistente");
+
+                    if(ItemExists.MaxStackSize < item.Quantity + storeItem.Quantity)
+                    {
+                        int newQuantity = ItemExists.MaxStackSize - item.Quantity;
+                    }
+                    item.Quantity += storeItem.Quantity;
+                    item.Price = storeItem.Price;
+                    await _storeItemRepository.UpdateOnStore(item);
+                    return item;
                 }
+
+
+
 
                 storeItem = await _storeItemRepository.AddOnStore(storeItem);
                 return storeItem;
@@ -45,29 +71,23 @@ namespace Bag_and_Shop_app.Application.Services
 
         }
 
-        public async Task<List<Item>> GetItemsByStore(int storeId)
+        public async Task<StoreItem> RemoveItemFromStore(StoreItem dto)
         {
             try
             {
-                Boolean store = await _storeRepository.VerifyStoreExists(storeId);
-                if (!store)
-                {
-                    throw new Exception("Loja inexistente");
-                }
+                Store store = await _storeRepository.VerifyStoreExists(dto.StoreId) ?? throw new Exception("Loja inexistente");
+                StoreItem item = await _storeItemRepository.GetItemById(dto.ItemId);
+                if (item.Quantity < 0) throw new Exception("Este item já foi esgotado na loja");
+                if (item.Quantity < dto.Quantity) throw new Exception("Quantidade insuficiente deste item na loja");
 
-                List<Item> itemsList = await _itemRepository.GetItemsByStoreId(storeId);
-
-
-                return itemsList;
-            }catch(Exception e)
-            {
-                throw new Exception("Falha ao recuperar itens: " + e);
+                item.Quantity -= dto.Quantity;
+                await _storeItemRepository.UpdateOnStore(item);
+                return item;
             }
-        }
-
-        public Task<StoreItem> RemoveItemFromStore(StoreItem dto)
-        {
-            throw new NotImplementedException();
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao remover item da loja: " + ex.Message);
+            }
         }
     }
 }

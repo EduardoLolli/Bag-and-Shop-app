@@ -1,4 +1,5 @@
-﻿using Bag_and_Shop_app.Application.DTOs.Store;
+﻿using Bag_and_Shop_app.Application.DTOs.Campaign;
+using Bag_and_Shop_app.Application.DTOs.Store;
 using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -18,33 +19,6 @@ namespace Bag_and_Shop_app.Controllers
             _storeService = storeService;
         }
 
-        [HttpPost("v1/AddItemOnStore")]
-        public async Task<IActionResult> AddItemOnStore([FromBody] AddItemOnStoreReqDTO dto)
-        {
-            try
-            {
-                StoreItem storeItem = TinyMapper.Map<StoreItem>(dto);
-
-                storeItem = await _storeService.AddItemOnStore(storeItem);
-
-
-                return Ok(new
-                {
-                    error = false,
-                    message = "Item  adicionado na loja com sucesso",
-                    data = storeItem
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new
-                {
-                    error = true,
-                    message = ex.Message
-                });
-
-            }
-        }
         [HttpPost("v1/GetProductsByStoreID")]
         public async Task<IActionResult> GetProductsByStoreID([FromBody] StoreBaseReqDTO Store)
         {
@@ -69,19 +43,51 @@ namespace Bag_and_Shop_app.Controllers
                 });
             }
         }
-        [HttpPost("v1/RemoveItemFromStore")]
-        public async Task<IActionResult> RemoveItemFromStore([FromBody] AddItemOnStoreReqDTO dto)
+
+        [HttpPost("v1/AddItemOnStore")]
+        public async Task<IActionResult> AddItemOnStore([FromBody] ItemMovimentationDTO dto)
         {
             try
             {
+                StoreItem storeItem = TinyMapper.Map<StoreItem>(dto);
 
-                
+                storeItem = await _storeService.AddItemOnStore(storeItem);
 
 
+                ItemMovResponseDTO responseDTO = TinyMapper.Map<ItemMovResponseDTO>(storeItem);
                 return Ok(new
                 {
                     error = false,
-                    message = "Funcionalidade não implementada",
+                    message = "Item  adicionado na loja com sucesso",
+                    data = responseDTO
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    error = true,
+                    message = ex.Message
+                });
+
+            }
+        }
+
+        [HttpPost("v1/RemoveItemFromStore")]
+        public async Task<ActionResult<ItemMovResponseDTO>> RemoveItemFromStore([FromBody] ItemMovimentationDTO dto)
+        {
+            try
+            {
+                StoreItem storeItem = TinyMapper.Map<StoreItem>(dto);
+                storeItem = await _storeService.RemoveItemFromStore(storeItem);
+
+
+                ItemMovResponseDTO responseDTO = TinyMapper.Map<ItemMovResponseDTO>(storeItem);
+                return Ok(new
+                {
+                    error = false,
+                    message = "Item/itens removido com sucesso da loja",
+                    data = responseDTO
                 });
             }
             catch (Exception ex)
