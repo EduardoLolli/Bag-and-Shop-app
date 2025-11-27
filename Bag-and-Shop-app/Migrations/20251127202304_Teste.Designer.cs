@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bag_and_Shop_app.Migrations
 {
     [DbContext(typeof(BagAndShopDBContext))]
-    [Migration("20251104231140_alteraçãoNosTiposDeDados")]
-    partial class alteraçãoNosTiposDeDados
+    [Migration("20251127202304_Teste")]
+    partial class Teste
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -181,6 +181,9 @@ namespace Bag_and_Shop_app.Migrations
                     b.Property<int>("CampaignId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CampaignId1")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsAlive")
                         .HasColumnType("bit");
 
@@ -194,6 +197,8 @@ namespace Bag_and_Shop_app.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CampaignId");
+
+                    b.HasIndex("CampaignId1");
 
                     b.HasIndex("UserId");
 
@@ -313,8 +318,8 @@ namespace Bag_and_Shop_app.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -492,15 +497,19 @@ namespace Bag_and_Shop_app.Migrations
             modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.Character", b =>
                 {
                     b.HasOne("Bag_and_Shop_app.Domain.Entities.Campaign", "Campaign")
-                        .WithMany("Characters")
+                        .WithMany()
                         .HasForeignKey("CampaignId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Bag_and_Shop_app.Domain.Entities.Campaign", null)
+                        .WithMany("Characters")
+                        .HasForeignKey("CampaignId1");
 
                     b.HasOne("Bag_and_Shop_app.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Campaign");

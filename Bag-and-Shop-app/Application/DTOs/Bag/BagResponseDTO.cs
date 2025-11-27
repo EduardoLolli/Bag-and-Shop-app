@@ -7,9 +7,9 @@ namespace Bag_and_Shop_app.Application.DTOs.Character
     {
 
         public int Id { get; set; }
-        public double Gold { get; set; }
-        public double WeightLimit { get; set; }
-        public double CurrentWeight { get; set; }
+        public Double Gold { get; set; }
+        public Double WeightLimit { get; set; }
+        public Double CurrentWeight { get; set; }
         public int CharacterId { get; set; }
     }
 }

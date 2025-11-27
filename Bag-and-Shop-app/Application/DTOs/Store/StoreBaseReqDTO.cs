@@ -6,6 +6,5 @@ namespace Bag_and_Shop_app.Application.DTOs.Store
     {
         [Required(ErrorMessage = "O campo StoreId é obrigatório.")]
         public int StoreId { get; set; }
-        public int ItemId { get; set; }
     }
 }

@@ -22,7 +22,6 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
                 if (Item != null)
                 {
                     Item.Quantity = storeItem.Quantity + Item.Quantity;
-                    Item.Price = storeItem.Price;
                     _context.StoreItems.Update(Item);
                     await _context.SaveChangesAsync();
                     return Item;

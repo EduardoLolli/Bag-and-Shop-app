@@ -50,7 +50,7 @@ namespace Bag_and_Shop_app.Controllers
         {
             try
             {
-                List<Item?> items = await _storeService.GetItemsByStore(Store.StoreId);
+                List<Item> items = await _storeService.GetItemsByStore(Store.StoreId);
 
 
                 return Ok(new
@@ -68,6 +68,31 @@ namespace Bag_and_Shop_app.Controllers
                     message = ex.Message
                 });
             }
+        }
+        [HttpPost("v1/RemoveItemFromStore")]
+        public async Task<IActionResult> RemoveItemFromStore([FromBody] AddItemOnStoreReqDTO dto)
+        {
+            try
+            {
+
+                
+
+
+                return Ok(new
+                {
+                    error = false,
+                    message = "Funcionalidade não implementada",
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    error = true,
+                    message = ex.Message
+                });
+            }
+
         }
     }
 }

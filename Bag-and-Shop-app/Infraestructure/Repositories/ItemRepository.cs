@@ -15,28 +15,23 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             _context = bagAndShopDBContext;
         }
 
-        public async Task<List<Item?>> GetItemsByStoreId(int storeId)
+        public async Task<List<Item>> GetItemsByStoreId(int storeId)
         {
             try
             {
-                List<Item?> items = await _context.Items
-        .Join(
-            _context.StoreItems, // Tabela que vamos juntar (Join)
-            item => item.Id,     // Chave primária da tabela Item
-            storeItem => storeItem.ItemId, // Chave estrangeira na tabela StoreItem
-            (item, storeItem) => new { item, storeItem } // Resultado do JOIN (Tipo anônimo)
-        )
-        .Where(joined => joined.storeItem.StoreId == storeId) // Filtra pelo StoreId
-        .Select(joined => joined.item) // Seleciona apenas o objeto Item final
-        .Distinct() // Garante que cada Item seja retornado apenas uma vez (se houver duplicatas no join)
-        .ToListAsync();
+                List<Item> items = await _context.StoreItems
+                    .AsNoTracking()
+                    .Where(si => si.StoreId == storeId)
+                    .Select(si => si.Item)
+                    .ToListAsync();
+                
 
                 return items;
 
             }
             catch (Exception e)
             {
-                throw new Exception("Falha ao buscar items");
+                throw new Exception("Falha ao buscar items: " + e.Message);
             }
         }
 
@@ -48,7 +43,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             return Task.FromResult(responseDto);
         }
 
-        public async Task<bool> verifyItemExists(int itemId)
+        public async Task<bool> VerifyItemExists(int itemId)
         {
 
             var item = await _context.Items
@@ -61,11 +56,6 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             }
 
             return true;
-        }
-
-        public Task<bool> VerifyItemExists(int itemId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

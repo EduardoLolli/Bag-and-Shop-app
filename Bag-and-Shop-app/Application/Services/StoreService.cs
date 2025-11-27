@@ -45,7 +45,7 @@ namespace Bag_and_Shop_app.Application.Services
 
         }
 
-        public async Task<List<Item?>> GetItemsByStore(int storeId)
+        public async Task<List<Item>> GetItemsByStore(int storeId)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Bag_and_Shop_app.Application.Services
                     throw new Exception("Loja inexistente");
                 }
 
-                List<Item?> itemsList = await _itemRepository.GetItemsByStoreId(storeId);
+                List<Item> itemsList = await _itemRepository.GetItemsByStoreId(storeId);
 
 
                 return itemsList;
@@ -63,6 +63,11 @@ namespace Bag_and_Shop_app.Application.Services
             {
                 throw new Exception("Falha ao recuperar itens: " + e);
             }
+        }
+
+        public Task<StoreItem> RemoveItemFromStore(StoreItem dto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Bag_and_Shop_app.Domain.Entities
     {
         public int Id { get; set; }
         public int Gold { get; set; } = 0;
-        public double WeightLimit { get; set; } = 20.0;
+        public Double WeightLimit { get; set; } = 20.0;
         public double CurrentWeight { get; set; } = 0.0;
         public int CharacterId { get; set; }
         [ForeignKey(nameof(CharacterId))]
