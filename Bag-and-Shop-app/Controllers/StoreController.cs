@@ -25,8 +25,6 @@ namespace Bag_and_Shop_app.Controllers
             try
             {
                 List<Item> items = await _storeService.GetItemsByStore(Store.StoreId);
-
-
                 return Ok(new
                 {
                     error = false,
@@ -50,10 +48,7 @@ namespace Bag_and_Shop_app.Controllers
             try
             {
                 StoreItem storeItem = TinyMapper.Map<StoreItem>(dto);
-
                 storeItem = await _storeService.AddItemOnStore(storeItem);
-
-
                 ItemMovResponseDTO responseDTO = TinyMapper.Map<ItemMovResponseDTO>(storeItem);
                 return Ok(new
                 {

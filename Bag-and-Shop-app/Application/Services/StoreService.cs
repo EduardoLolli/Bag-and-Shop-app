@@ -37,18 +37,15 @@ namespace Bag_and_Shop_app.Application.Services
             {
                 Store store = await _storeRepository.VerifyStoreExists(storeItem.StoreId) ?? throw new Exception("Loja inexistente");
                 Item ItemExists = await _itemRepository.VerifyItemExists(storeItem.ItemId) ?? throw new Exception("Item inexistente");
-
-                if (ItemExists.IsStackable == false)
-                {
-                    storeItem.Quantity = 1;
-                    return await _storeItemRepository.AddOnStore(storeItem);
-                }
-
-                StoreItem item = await _storeItemRepository.GetItemById(storeItem.ItemId);
+                StoreItem item = await _storeItemRepository.GetItemById(storeItem.ItemId, store.Id);
                 if (item != null)
                 {
-
-                    if(ItemExists.MaxStackSize < item.Quantity + storeItem.Quantity)
+                    if (ItemExists.IsStackable == false)
+                    {
+                        storeItem.Quantity = 1;
+                        return await _storeItemRepository.AddOnStore(storeItem);
+                    }
+                    if (ItemExists.MaxStackSize < item.Quantity + storeItem.Quantity)
                     {
                         int newQuantity = ItemExists.MaxStackSize - item.Quantity;
                     }
@@ -57,10 +54,11 @@ namespace Bag_and_Shop_app.Application.Services
                     await _storeItemRepository.UpdateOnStore(item);
                     return item;
                 }
-
-
-
-
+                if (ItemExists.IsStackable == false)
+                {
+                    storeItem.Quantity = 1;
+                    return await _storeItemRepository.AddOnStore(storeItem);
+                }
                 storeItem = await _storeItemRepository.AddOnStore(storeItem);
                 return storeItem;
             }
@@ -68,7 +66,6 @@ namespace Bag_and_Shop_app.Application.Services
             {
                 throw new Exception("Erro ao adicionar item na loja: " + ex.Message);
             }
-
         }
 
         public async Task<StoreItem> RemoveItemFromStore(StoreItem dto)
@@ -76,7 +73,7 @@ namespace Bag_and_Shop_app.Application.Services
             try
             {
                 Store store = await _storeRepository.VerifyStoreExists(dto.StoreId) ?? throw new Exception("Loja inexistente");
-                StoreItem item = await _storeItemRepository.GetItemById(dto.ItemId);
+                StoreItem item = await _storeItemRepository.GetItemById(dto.ItemId, store.Id);
                 if (item.Quantity < 0) throw new Exception("Este item já foi esgotado na loja");
                 if (item.Quantity < dto.Quantity) throw new Exception("Quantidade insuficiente deste item na loja");
 

@@ -14,11 +14,12 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             _context = context;
         }
 
-        public async Task<StoreItem> GetItemById(int itemId)
+        public async Task<StoreItem> GetItemById(int itemId, int storeId)
         {
             try
             {
-                StoreItem Item = await _context.StoreItems.FirstOrDefaultAsync(si => si.ItemId == itemId) ?? null!;
+                StoreItem Item = await _context.StoreItems.
+                FirstOrDefaultAsync(si => si.ItemId == itemId && si.StoreId == storeId) ?? null!;
                 return Item;
             }
             catch (Exception)
