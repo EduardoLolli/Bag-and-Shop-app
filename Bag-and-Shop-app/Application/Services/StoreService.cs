@@ -24,6 +24,12 @@ namespace Bag_and_Shop_app.Application.Services
             {
                 Store store = await _storeRepository.VerifyStoreExists(storeId) ?? throw new Exception("Loja inexistente");
                 List<Item> itemsList = await _itemRepository.GetItemsByStoreId(storeId);
+
+                foreach (var itens in itemsList)
+                {
+                    
+                }
+
                 return itemsList;
             }
             catch (Exception e)

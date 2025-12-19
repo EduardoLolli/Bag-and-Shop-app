@@ -1,4 +1,4 @@
-namespace Bag_and_Shop_app.Application.DTOs.Campaign
+namespace Bag_and_Shop_app.Application.DTOs.Store
 {
     public class ItemMovResponseDTO
     {
