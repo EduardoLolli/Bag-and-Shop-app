@@ -5,7 +5,7 @@ namespace Bag_and_Shop_app.Application.Interfaces
 {
     public interface ICampaignService
     {
-        Task<CampaignResponseDTO> CreateCampaign(Campaign campaign);
+        Task<Boolean> CreateCampaign(Campaign campaign);
         Task<string> GenerateCampaignCode();
 
         Task<List<CampaignResponseDTO>> GetCampaignByMasterId(int masterId);
