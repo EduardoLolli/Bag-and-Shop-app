@@ -36,8 +36,7 @@ namespace Bag_and_Shop_app.Application.Services
                 {
                     new Claim("UserId", user.Id.ToString()),
                     new Claim("UserName", user.Username),
-                    new Claim("Email", user.Email),
-                    new Claim("UserRole", user.Role)
+                    new Claim("Email", user.Email)
                 }),
                 Expires = DateTime.UtcNow.AddHours(24),
                 SigningCredentials = new SigningCredentials(
@@ -69,8 +68,7 @@ namespace Bag_and_Shop_app.Application.Services
                 {
                     Id = int.Parse(jwtToken.Claims.First(x => x.Type == "UserId").Value),
                     Username = jwtToken.Claims.First(x => x.Type == "UserName").Value,
-                    Email = jwtToken.Claims.First(x => x.Type == "Email").Value,
-                    Role = jwtToken.Claims.First(x => x.Type == "UserRole").Value
+                    Email = jwtToken.Claims.First(x => x.Type == "Email").Value
                 };
 
             }

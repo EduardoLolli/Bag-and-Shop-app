@@ -11,7 +11,5 @@ namespace Bag_and_Shop_app.Infraestructure.Data
     public DbSet<SystemEntity> SystemEntities { get; set; }
     public DbSet<User> Users { get; set; }
 
-    // Seu BagAndShopDBContext
-
   }
 }

@@ -32,8 +32,7 @@ namespace Bag_and_Shop_app.Controllers
                 {
                     Username = dto.Username,
                     Email = dto.Email,
-                    PasswordHash = _authService.HashPass(dto.Password),
-                    Role = "DEFAULT"
+                    PasswordHash = _authService.HashPass(dto.Password)
                 };
                 Boolean validEmail = await _userService.FindUserByEmail(dto.Email) == null;
                 if (!validEmail)
@@ -127,8 +126,7 @@ namespace Bag_and_Shop_app.Controllers
                         {
                             Id = user.Id,
                             Username = user.Username,
-                            Email = user.Email,
-                            Role = user.Role
+                            Email = user.Email
                         }
                     }
                 });

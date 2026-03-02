@@ -4,6 +4,7 @@ using Bag_and_Shop_app.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bag_and_Shop_app.Migrations
 {
     [DbContext(typeof(BagAndShopDBContext))]
-    partial class BagAndShopDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260302165452_Sync_new_machine")]
+    partial class Sync_new_machine
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,6 +102,10 @@ namespace Bag_and_Shop_app.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -114,13 +121,13 @@ namespace Bag_and_Shop_app.Migrations
             modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.Campaign", b =>
                 {
                     b.HasOne("Bag_and_Shop_app.Domain.Entities.User", "Master")
-                        .WithMany("MasteredCampaigns")
+                        .WithMany()
                         .HasForeignKey("MasterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Bag_and_Shop_app.Domain.Entities.SystemEntity", "System")
-                        .WithMany("Campaigns")
+                        .WithMany()
                         .HasForeignKey("SystemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -128,16 +135,6 @@ namespace Bag_and_Shop_app.Migrations
                     b.Navigation("Master");
 
                     b.Navigation("System");
-                });
-
-            modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.SystemEntity", b =>
-                {
-                    b.Navigation("Campaigns");
-                });
-
-            modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.User", b =>
-                {
-                    b.Navigation("MasteredCampaigns");
                 });
 #pragma warning restore 612, 618
         }
