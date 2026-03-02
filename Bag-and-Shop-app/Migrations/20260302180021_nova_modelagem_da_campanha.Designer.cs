@@ -4,6 +4,7 @@ using Bag_and_Shop_app.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bag_and_Shop_app.Migrations
 {
     [DbContext(typeof(BagAndShopDBContext))]
-    partial class BagAndShopDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260302180021_nova_modelagem_da_campanha")]
+    partial class nova_modelagem_da_campanha
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,6 +49,9 @@ namespace Bag_and_Shop_app.Migrations
                     b.Property<int>("MasterId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Master_id")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -54,6 +60,9 @@ namespace Bag_and_Shop_app.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("SystemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("System_id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

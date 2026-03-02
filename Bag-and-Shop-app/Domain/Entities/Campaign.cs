@@ -6,10 +6,10 @@ namespace Bag_and_Shop_app.Domain.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public int System_id { get; set; }
-        public int Players_limit { get; set; } = 10;
+        public int SystemId { get; set; }
         public SystemEntity System { get; set; } = null!;
-        public int Master_id { get; set; }
+        public int Players_limit { get; set; } = 10;
+        public int MasterId { get; set; }
         public User Master { get; set; } = null!;
         public string Campaign_code { get; set; } = string.Empty;
         public AttributeEnum Attribute_definition { get; set; }

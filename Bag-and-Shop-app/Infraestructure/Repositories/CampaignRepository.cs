@@ -35,15 +35,15 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             try
             {
                 return await _bagAndShopDBContext.Campaigns
-                .Where(c => c.CampaignCode == campaignCode)
+                .Where(c => c.Campaign_code == campaignCode)
                 .Select(c => new CampaignResponseDTO
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    PlayersLimit = c.PlayersLimit,
+                    PlayersLimit = c.Players_limit,
                     MasterId = c.MasterId,
                     SystemId = c.SystemId,
-                    CampaignCode = c.CampaignCode
+                    CampaignCode = c.Campaign_code
                 })
                 .FirstAsync();
             }
@@ -61,10 +61,10 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    PlayersLimit = c.PlayersLimit,
+                    PlayersLimit = c.Players_limit,
                     MasterId = c.MasterId,
                     SystemId = c.SystemId,
-                    CampaignCode = c.CampaignCode
+                    CampaignCode = c.Campaign_code
                 })
                 .ToListAsync();
 
@@ -73,7 +73,7 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
 
         public Task<Boolean> VerifyCode(string code)
         {
-            var result = _bagAndShopDBContext.Campaigns.FirstOrDefaultAsync(c => c.CampaignCode == code);
+            var result = _bagAndShopDBContext.Campaigns.FirstOrDefaultAsync(c => c.Campaign_code == code);
 
             if (result.Result == null)
             {
