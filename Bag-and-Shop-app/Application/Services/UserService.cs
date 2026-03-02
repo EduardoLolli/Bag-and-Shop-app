@@ -1,7 +1,6 @@
 ﻿using Bag_and_Shop_app.Application.DTOs.User;
 using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
-using System.Collections.Generic;
 
 namespace Bag_and_Shop_app.Application.Services
 {
@@ -12,21 +11,21 @@ namespace Bag_and_Shop_app.Application.Services
         {
             _userRepository = userRepository;
         }
-        public Task<UserResponseDTO> addUser(User user)
+        public Task<UserResponseDTO> AddUser(User user)
         {
-            UserResponseDTO newUser = _userRepository.addNewUser(user).Result;
+            UserResponseDTO newUser = _userRepository.AddNewUser(user).Result;
             return Task.FromResult(newUser);
         }
-        public Task<User> findUserByEmail(string email)
+        public Task<User?> FindUserByEmail(string email)
         {
-            User user = _userRepository.findUserByEmail(email).Result;
+            User? user = _userRepository.FindUserByEmail(email).Result;
             return Task.FromResult(user);
         }
 
-        public Task<List<UserResponseDTO>> getAllUsers()
+        public async Task<List<UserResponseDTO>> GetAllUsers()
         {
-            List<UserResponseDTO> users = _userRepository.getAllUsers();
-            return Task.FromResult(users);
+            List<UserResponseDTO> users = await _userRepository.GetAllUsers();
+            return users;
         }
     }
 }

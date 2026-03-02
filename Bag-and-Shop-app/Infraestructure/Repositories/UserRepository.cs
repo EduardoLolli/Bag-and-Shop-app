@@ -12,35 +12,61 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
 
         public UserRepository(BagAndShopDBContext context)
         {
-                    _context = context;
+            _context = context;
         }
-        public Task<UserResponseDTO> addNewUser(User user)
+        public Task<UserResponseDTO> AddNewUser(User user)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
-            UserResponseDTO newUser = new UserResponseDTO
+            try
             {
-                Id = user.Id,
-                Username= user.Username,
-                Email = user.Email,
-            };
-            return Task.FromResult(newUser);
+                _context.Users.Add(user);
+                _context.SaveChanges();
+                UserResponseDTO newUser = new UserResponseDTO
+                {
+                    Username = user.Username,
+                    Email = user.Email,
+                };
+                return Task.FromResult(newUser);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao adicionar usuário: " + ex.Message);
+            }
         }
-        public Task<User> findUserByEmail(string email)
+        public async Task<User?> FindUserByEmail(string email)
         {
-            return _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            try
+            {
+                return await _context.Users.FirstAsync(u => u.Email == email);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        public List<UserResponseDTO> getAllUsers()
+        public async Task<User?> FindUserById(int id)
         {
-            return _context.Users
+            try
+            {
+                return await _context.Users.FirstAsync(u => u.Id == id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<UserResponseDTO>> GetAllUsers()
+        {
+            var users = await _context.Users
                 .Select(u => new UserResponseDTO
                 {
                     Id = u.Id,
                     Username = u.Username,
                     Email = u.Email,
                 })
-                .ToList();
+                .ToListAsync();
+            return users;
         }
     }
 }

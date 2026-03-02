@@ -5,8 +5,8 @@ namespace Bag_and_Shop_app.Application.Services
 
     public interface IUserService
     {
-        Task<UserResponseDTO> addUser(User user);
-        Task<User> findUserByEmail(string email);
-        Task<List<UserResponseDTO>> getAllUsers();
+        Task<UserResponseDTO> AddUser(User user);
+        Task<User?> FindUserByEmail(string email);
+        Task<List<UserResponseDTO>> GetAllUsers();
     }
 }

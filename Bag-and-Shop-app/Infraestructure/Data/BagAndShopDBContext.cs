@@ -2,17 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 namespace Bag_and_Shop_app.Infraestructure.Data
 {
-    public class BagAndShopDBContext : DbContext
+  public class BagAndShopDBContext : DbContext
+  {
+    public BagAndShopDBContext(DbContextOptions<BagAndShopDBContext> options) : base(options)
     {
-        public BagAndShopDBContext(DbContextOptions<BagAndShopDBContext> options): base(options)
-        {
-        }
-
-        public DbSet<User> Users { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
     }
+    public DbSet<Campaign> Campaigns { get; set; }
+    public DbSet<SystemEntity> SystemEntities { get; set; }
+    public DbSet<User> Users { get; set; }
+
+    // Seu BagAndShopDBContext
+
+  }
 }

@@ -4,6 +4,7 @@ using Bag_and_Shop_app.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bag_and_Shop_app.Migrations
 {
     [DbContext(typeof(BagAndShopDBContext))]
-    partial class BagAndShopDBContextModelSnapshot : ModelSnapshot
+    [Migration("20251127202304_Teste")]
+    partial class Teste
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,17 +253,7 @@ namespace Bag_and_Shop_app.Migrations
                     b.Property<double>("Weight")
                         .HasColumnType("float");
 
-                    b.Property<int?>("campaignId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("systemEntityId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("campaignId");
-
-                    b.HasIndex("systemEntityId");
 
                     b.ToTable("Items");
                 });
@@ -522,21 +515,6 @@ namespace Bag_and_Shop_app.Migrations
                     b.Navigation("Campaign");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.Item", b =>
-                {
-                    b.HasOne("Bag_and_Shop_app.Domain.Entities.Campaign", "campaign")
-                        .WithMany()
-                        .HasForeignKey("campaignId");
-
-                    b.HasOne("Bag_and_Shop_app.Domain.Entities.SystemEntity", "systemEntity")
-                        .WithMany()
-                        .HasForeignKey("systemEntityId");
-
-                    b.Navigation("campaign");
-
-                    b.Navigation("systemEntity");
                 });
 
             modelBuilder.Entity("Bag_and_Shop_app.Domain.Entities.ItemAtribute", b =>

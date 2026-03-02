@@ -1,8 +1,8 @@
-# 🛍️ Bag-And-Shop-App API
+# Bag-And-Shop-App API
 
-Bem-vindo à documentação oficial da **Bag-And-Shop-App API**!
+Bem-vindo à documentação da **Bag-And-Shop-App API**!
 
-Esta API foi desenvolvida para gerenciar as operações de usuários e, futuramente, de produtos e pedidos para um aplicativo de compras. Ela permite a criação, leitura e gerenciamento de dados essenciais para o funcionamento do seu e-commerce.
+Esta API foi desenvolvida para gerenciar as operações de usuários de um sistema de RPG de mesa, visando dar suporte em campanhas. Ela permite a criação, leitura e gerenciamento de items e dados referentes ao inventário e loja que os usuários podem interagir.
 
 ---
 
@@ -16,8 +16,7 @@ Para começar a usar a API, você precisará ter o endpoint base.
 
 ## Autenticação
 
-*(Neste momento, a autenticação não é obrigatória para as rotas listadas, mas esta seção será expandida com informações sobre tokens, chaves de API ou outros métodos de segurança conforme a API evoluir.)*
-
+Bearer Token
 ---
 
 ## getAllUsers
