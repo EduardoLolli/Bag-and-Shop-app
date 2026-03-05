@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Bag_and_Shop_app.Domain.Enums;
 
 namespace Bag_and_Shop_app.Application.DTOs.Campaign
 {
@@ -14,5 +15,8 @@ namespace Bag_and_Shop_app.Application.DTOs.Campaign
     public int MasterId { get; set; }
 
     public int PlayersLimit { get; set; }
+
+    public AttributeEnum Attribute_definition { get; set; }
+    public Boolean Enable_multiclasses { get; set; }
   }
 }
