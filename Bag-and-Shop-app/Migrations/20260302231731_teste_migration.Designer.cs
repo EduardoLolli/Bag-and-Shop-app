@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bag_and_Shop_app.Migrations
 {
     [DbContext(typeof(BagAndShopDBContext))]
-    [Migration("20260302174019_new_teste_migration")]
-    partial class new_teste_migration
+    [Migration("20260302231731_teste_migration")]
+    partial class teste_migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,18 @@ namespace Bag_and_Shop_app.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CampaignCode")
+                    b.Property<int>("Attribute_definition")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Campaign_code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Enable_multiclasses")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Is_store_open")
+                        .HasColumnType("bit");
 
                     b.Property<int>("MasterId")
                         .HasColumnType("int");
@@ -44,7 +53,7 @@ namespace Bag_and_Shop_app.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PlayersLimit")
+                    b.Property<int>("Players_limit")
                         .HasColumnType("int");
 
                     b.Property<int>("SystemId")
@@ -75,7 +84,7 @@ namespace Bag_and_Shop_app.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("system_code")
+                    b.Property<int>("System_code")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

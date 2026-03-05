@@ -30,7 +30,7 @@ namespace Bag_and_Shop_app.Application.Services
       }
       catch (Exception ex)
       {
-        throw new Exception("Erro ao criar campanha -> " + ex.Message);
+        throw new Exception("Erro ao criar campanha: " + ex.Message);
       }
     }
 

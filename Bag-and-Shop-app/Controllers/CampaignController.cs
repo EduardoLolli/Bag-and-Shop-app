@@ -27,6 +27,7 @@ namespace Bag_and_Shop_app.Controllers
       {
         Campaign newCampaign = TinyMapper.Map<Campaign>(dto);
         newCampaign.Campaign_code = await _campaignService.GenerateCampaignCode();
+        
         // CampaignResponseDTO campaignResponse = await _campaignService.CreateCampaign(newCampaign);
         return Ok(new
         {
