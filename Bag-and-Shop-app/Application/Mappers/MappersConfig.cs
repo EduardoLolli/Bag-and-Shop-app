@@ -6,8 +6,8 @@ public static class TinyMapperConfig
 {
     public static void RegisterBindings()
     {
-        TinyMapper.Bind<Campaign, CampaignResponseDTO>();
-        TinyMapper.Bind<CampaignRequestDTO, Campaign>();
+        TinyMapper.Bind<CreateCampaignDTO, Campaign>();
+        TinyMapper.Bind<Campaign, CreateCampaignResponseDTO>();
         // TinyMapper.Bind<>();
         // TinyMapper.Bind<>();
         // TinyMapper.Bind<>();

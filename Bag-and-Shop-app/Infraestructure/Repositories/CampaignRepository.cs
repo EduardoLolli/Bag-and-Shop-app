@@ -15,13 +15,13 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             _bagAndShopDBContext = bagAndShopDBContext;
         }
 
-        public Task<CampaignResponseDTO> AddCampaign(Campaign campaign)
+        public Task<CreateCampaignResponseDTO> AddCampaign(Campaign campaign)
         {
             try
             {
                 _bagAndShopDBContext.Campaigns.Add(campaign);
                 _bagAndShopDBContext.SaveChanges();
-                CampaignResponseDTO campaignResponseDTO = TinyMapper.Map<CampaignResponseDTO>(campaign);
+                CreateCampaignResponseDTO campaignResponseDTO = TinyMapper.Map<CreateCampaignResponseDTO>(campaign);
                 return Task.FromResult(campaignResponseDTO);
             }
             catch (Exception e)
@@ -30,20 +30,20 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             }
         }
 
-        public async Task<CampaignResponseDTO> GetCampaignByCCode(string campaignCode)
+        public async Task<CreateCampaignResponseDTO> GetCampaignByCCode(string campaignCode)
         {
             try
             {
                 return await _bagAndShopDBContext.Campaigns
                 .Where(c => c.Campaign_code == campaignCode)
-                .Select(c => new CampaignResponseDTO
+                .Select(c => new CreateCampaignResponseDTO
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    PlayersLimit = c.Players_limit,
+                    Players_limit = c.Players_limit,
                     MasterId = c.MasterId,
                     SystemId = c.SystemId,
-                    CampaignCode = c.Campaign_code
+                    Campaign_code = c.Campaign_code
                 })
                 .FirstAsync();
             }
@@ -53,18 +53,18 @@ namespace Bag_and_Shop_app.Infraestructure.Repositories
             }
         }
 
-        public Task<List<CampaignResponseDTO>> GetCampaignByMasterId(int masterId)
+        public Task<List<CreateCampaignResponseDTO>> GetCampaignByMasterId(int masterId)
         {
             var campaigns = _bagAndShopDBContext.Campaigns
                 .Where(c => c.MasterId == masterId)
-                .Select(c => new CampaignResponseDTO
+                .Select(c => new CreateCampaignResponseDTO
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    PlayersLimit = c.Players_limit,
+                    Players_limit = c.Players_limit,
                     MasterId = c.MasterId,
                     SystemId = c.SystemId,
-                    CampaignCode = c.Campaign_code
+                    Campaign_code = c.Campaign_code
                 })
                 .ToListAsync();
 

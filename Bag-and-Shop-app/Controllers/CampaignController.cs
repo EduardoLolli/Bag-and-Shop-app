@@ -21,19 +21,19 @@ namespace Bag_and_Shop_app.Controllers
     }
 
     [HttpPost("v1/CreateCampaign")]
-    public async Task<ActionResult<CampaignResponseDTO>> CreateCampaign([FromBody] CampaignRequestDTO dto)
+    public async Task<ActionResult<CreateCampaignResponseDTO>> CreateCampaign([FromBody] CreateCampaignDTO dto)
     {
       try
       {
         Campaign newCampaign = TinyMapper.Map<Campaign>(dto);
         newCampaign.Campaign_code = await _campaignService.GenerateCampaignCode();
         
-        // CampaignResponseDTO campaignResponse = await _campaignService.CreateCampaign(newCampaign);
+        CreateCampaignResponseDTO campaignResponse = await _campaignService.CreateCampaign(newCampaign);
         return Ok(new
         {
           error = false,
           message = "Campanha criada com sucesso",
-          data = true
+          data = campaignResponse
           // campaignResponse
         });
       }
@@ -47,81 +47,81 @@ namespace Bag_and_Shop_app.Controllers
       }
     }
 
-    [HttpGet("v1/getCampaignsByMasterId/{masterId}")]
-    public async Task<ActionResult<List<CampaignResponseDTO>>> GetCampaignByMasterId(int masterId)
-    {
-      try
-      {
-        List<CampaignResponseDTO> campaigns = await _campaignService.GetCampaignByMasterId(masterId);
-        return Ok(new
-        {
-          error = false,
-          message = "Campanhas obtidas com sucesso",
-          data = campaigns
-        });
-      }
-      catch (Exception ex)
-      {
-        return BadRequest(new
-        {
-          error = true,
-          message = ex.Message
-        });
-      }
-    }
+    // [HttpGet("v1/getCampaignsByMasterId/{masterId}")]
+    // public async Task<ActionResult<List<CampaignResponseDTO>>> GetCampaignByMasterId(int masterId)
+    // {
+    //   try
+    //   {
+    //     List<CampaignResponseDTO> campaigns = await _campaignService.GetCampaignByMasterId(masterId);
+    //     return Ok(new
+    //     {
+    //       error = false,
+    //       message = "Campanhas obtidas com sucesso",
+    //       data = campaigns
+    //     });
+    //   }
+    //   catch (Exception ex)
+    //   {
+    //     return BadRequest(new
+    //     {
+    //       error = true,
+    //       message = ex.Message
+    //     });
+    //   }
+    // }
 
-    [HttpPost("v1/findCampaignByCode")]
-    public async Task<ActionResult<CampaignResponseDTO>> FindCampaignByCode([FromBody] CampaignCodeRequestDTO dto)
-    {
+    // [HttpPost("v1/findCampaignByCode")]
+    // public async Task<ActionResult<CampaignResponseDTO>> FindCampaignByCode([FromBody] CampaignCodeRequestDTO dto)
+    // {
 
-      try
-      {
-        CampaignResponseDTO campaign = await _campaignService.GetCampaignByCode(dto.CampaignCode);
-
-
-        return Ok(new
-        {
-          error = false,
-          message = "Campanha obtida com sucesso",
-          data = campaign
-        });
-      }
-      catch (Exception ex)
-      {
-        return BadRequest(new
-        {
-          error = true,
-          message = ex.Message
-        });
-      }
-    }
+    //   try
+    //   {
+    //     CampaignResponseDTO campaign = await _campaignService.GetCampaignByCode(dto.CampaignCode);
 
 
-    [HttpPost("v1/getMasterShieldInfo")]
-    public async Task<ActionResult<CampaignResponseDTO>> getMasterShieldInfo([FromBody] CampaignCodeRequestDTO dto)
-    {
+    //     return Ok(new
+    //     {
+    //       error = false,
+    //       message = "Campanha obtida com sucesso",
+    //       data = campaign
+    //     });
+    //   }
+    //   catch (Exception ex)
+    //   {
+    //     return BadRequest(new
+    //     {
+    //       error = true,
+    //       message = ex.Message
+    //     });
+    //   }
+    // }
 
-      try
-      {
-        CampaignResponseDTO campaign = await _campaignService.GetCampaignByCode(dto.CampaignCode);
+
+    // [HttpPost("v1/getMasterShieldInfo")]
+    // public async Task<ActionResult<CampaignResponseDTO>> getMasterShieldInfo([FromBody] CampaignCodeRequestDTO dto)
+    // {
+
+    //   try
+    //   {
+    //     CampaignResponseDTO campaign = await _campaignService.GetCampaignByCode(dto.CampaignCode);
 
 
-        return Ok(new
-        {
-          error = false,
-          message = "Dados da campanha recuperados com sucesso!",
-          data = campaign
-        });
-      }
-      catch (Exception ex)
-      {
-        return BadRequest(new
-        {
-          error = true,
-          message = ex.Message
-        });
-      }
-    }
+    //     return Ok(new
+    //     {
+    //       error = false,
+    //       message = "Dados da campanha recuperados com sucesso!",
+    //       data = campaign
+    //     });
+    //   }
+    //   catch (Exception ex)
+    //   {
+    //     return BadRequest(new
+    //     {
+    //       error = true,
+    //       message = ex.Message
+    //     });
+    //   }
+    // }
 
 
   }

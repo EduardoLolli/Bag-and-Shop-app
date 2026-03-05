@@ -10,6 +10,8 @@ namespace Bag_and_Shop_app.Infraestructure.Data
     public DbSet<Campaign> Campaigns { get; set; }
     public DbSet<SystemEntity> SystemEntities { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Store> Store { get; set; }
+    public DbSet<SystemFields> systemFields { get; set; }
 
   }
 }

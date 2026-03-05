@@ -3,6 +3,7 @@ using Bag_and_Shop_app.Application.DTOs.System;
 using Bag_and_Shop_app.Application.Interfaces;
 using Bag_and_Shop_app.Domain.Entities;
 using Bag_and_Shop_app.Domain.Interfaces;
+using Nelibur.ObjectMapper;
 
 namespace Bag_and_Shop_app.Application.Services
 {
@@ -11,21 +12,28 @@ namespace Bag_and_Shop_app.Application.Services
   {
     private readonly ICampaignRepository _campaignRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IStoreService _storeService;
     public CampaignService(
         ICampaignRepository campaignRepository,
-        IUserRepository userRepository)
+        IUserRepository userRepository,
+        IStoreService storeService
+        )
     {
       _campaignRepository = campaignRepository;
       _userRepository = userRepository;
+      _storeService = storeService;
     }
 
-    public async Task<Boolean> CreateCampaign(Campaign campaign)
+    public async Task<CreateCampaignResponseDTO> CreateCampaign(Campaign campaign)
     {
       try
       {
 
+        CreateCampaignResponseDTO camp = TinyMapper.Map<CreateCampaignResponseDTO>(campaign);
+        // Store store = await _storeService.CreateStore(camp.Id);
 
-        return true;
+
+        return camp;
 
       }
       catch (Exception ex)
@@ -57,17 +65,17 @@ namespace Bag_and_Shop_app.Application.Services
       }
     }
 
-    public Task<CampaignResponseDTO> GetCampaignByCode(string campaignCode)
-    {
+    // public Task<CampaignResponseDTO> GetCampaignByCode(string campaignCode)
+    // {
 
-      return _campaignRepository.GetCampaignByCCode(campaignCode);
+    //   return _campaignRepository.GetCampaignByCCode(campaignCode);
 
-    }
+    // }
 
-    public Task<List<CampaignResponseDTO>> GetCampaignByMasterId(int masterId)
-    {
-      return _campaignRepository.GetCampaignByMasterId(masterId);
-    }
+    // public Task<List<CampaignResponseDTO>> GetCampaignByMasterId(int masterId)
+    // {
+    //   return _campaignRepository.GetCampaignByMasterId(masterId);
+    // }
 
   }
 }
